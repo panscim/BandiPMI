@@ -34,6 +34,7 @@ footer{background:#fff;padding:80px 20px 40px;border-top:1px solid #eef2fb;}
 
 @media(max-width:800px){.f-cnt{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.f-cnt{grid-template-columns:1fr;text-align:center;}.f-social{justify-content:center;}.cb{flex-direction:column;bottom:0;left:0;right:0;border-radius:20px 20px 0 0;padding:20px;}}
+
 header{background:linear-gradient(135deg,#1a6ef5,#0f4ec2);padding:28px 20px 60px;text-align:center;color:#fff;}
 .logo{font-size:28px;font-weight:800;}.logo span{color:#a5c8ff;}
 header p{margin-top:8px;font-size:15px;opacity:.9;}
@@ -73,7 +74,8 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .card.closed .ch .ct{color:var(--m);}
 .card.closed .badge.bg{background:#f3f4f6;color:var(--m);}
 .status-tag{position:absolute;top:10px;right:10px;background:#ef4444;color:#fff;font-size:11px;font-weight:900;padding:2px 8px;border-radius:4px;text-transform:uppercase;}
-/* MODAL */
+
+/* MODAL DESIGN PREMIUM */
 .ov{display:none;position:fixed;inset:0;background:rgba(10,20,50,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;}
 .ov.open{display:flex;}
 .modal{background:#fff;border-radius:24px;max-width:660px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}
@@ -87,19 +89,13 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .pl2 li{padding:9px 0;border-bottom:1px solid #f4f4f4;font-size:14.5px;display:flex;gap:10px;line-height:1.4;}
 .pl2 li:last-child{border-bottom:none;}
 .dot{color:var(--p);font-size:18px;flex-shrink:0;}
-.hb{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:14px;padding:16px 18px;border-left:4px solid var(--p);margin-bottom:14px;}
-.ha{font-size:28px;font-weight:900;color:var(--p);}
-.hl{font-size:13px;color:var(--m);margin-top:2px;}
-.wb{background:#fff7ed;border-radius:14px;padding:14px 18px;border-left:4px solid #ea580c;font-size:13.5px;color:#7c2d12;margin-top:14px;}
 .mf{padding:20px 28px;border-top:1px solid #f0f0f0;}
 .btn-p{width:100%;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border:none;border-radius:14px;padding:16px;font-size:17px;font-weight:800;cursor:pointer;}
 .btn-p:hover{opacity:.9;}
 .btn-x{display:block;text-align:center;margin-top:12px;color:var(--m);font-size:13px;cursor:pointer;background:none;border:none;width:100%;}
-/* REGIONI */
 .rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:10px;}
 .rc{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;color:#0369a1;text-align:center;}
 .rc.hl2{background:#dcfce7;border-color:#86efac;color:#15803d;}
-/* CONTRIBUTO */
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
 .ccard{border-radius:14px;padding:16px;text-align:center;}
 .ccard.sm{background:linear-gradient(135deg,#dbeafe,#eff6ff);border:2px solid #93c5fd;}
@@ -111,8 +107,6 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .bx{background:#f0fdf4;border:2px dashed #86efac;border-radius:14px;padding:14px 18px;margin-top:10px;display:flex;gap:12px;align-items:center;}
 .bxi{font-size:28px;flex-shrink:0;}
 .bxt .bxtt{font-size:14px;font-weight:800;color:#15803d;}
-.bxt .bxs{font-size:13px;color:#166534;margin-top:3px;line-height:1.4;}
-/* SIMULATORE */
 .sim{background:linear-gradient(135deg,#1a6ef5,#0f4ec2);border-radius:18px;padding:24px;color:#fff;}
 .sim h3{font-size:16px;font-weight:800;margin-bottom:4px;}
 .sim p{font-size:13px;opacity:.85;margin-bottom:18px;}
@@ -129,8 +123,8 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .si{background:var(--g);border-radius:12px;padding:12px;text-align:center;}
 .sv{font-size:18px;font-weight:800;color:var(--p);}
 .sl{font-size:11px;color:var(--m);margin-top:3px;}
-.sn{font-size:12px;color:var(--m);margin-top:12px;padding-top:12px;border-top:1px solid #eee;line-height:1.5;}
-/* FORM */
+
+/* FORM MODAL */
 .fm{background:#fff;border-radius:24px;max-width:500px;width:100%;padding:30px 28px;box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:92vh;overflow-y:auto;}
 .fmtitle{font-size:20px;font-weight:800;margin-bottom:6px;}
 .fmsub{font-size:13.5px;color:var(--m);margin-bottom:22px;}
@@ -183,14 +177,12 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
     <div class="cc"><div class="cn">21 apr</div><div class="cl">Apertura sportello</div></div>
   </div>
   <div class="st">📋 Bandi disponibili per la tua PMI</div>
-
   <div id="bandiContainer">
     <div style="text-align:center; padding:40px; color:var(--m);">⏳ Caricamento bandi...</div>
   </div>
 </main>
 
 <div id="modalsContainer"></div>
-
 
 <!-- FORM MODAL -->
 <div class="ov" id="mForm">
@@ -213,55 +205,45 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   <div class="f-cnt">
     <div class="f-col">
       <div class="logo">Bandi<span>PMI</span> 🚀</div>
-      <p>La piattaforma leader in Italia per la ricerca e la gestione dei contributi a fondo perduto e finanziamenti per le PMI.</p>
-      <div class="f-social">
-        <a href="#">Linked</a>
-        <a href="#">Insta</a>
-        <a href="#">Face</a>
-      </div>
+      <p>La piattaforma leader in Italia per la ricerca e la gestione dei contributi a fondo perduto.</p>
+      <div class="f-social"><a href="#">LN</a><a href="#">IG</a><a href="#">FB</a></div>
     </div>
     <div class="f-col">
       <h4>Piattaforma</h4>
       <ul class="f-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="#si" onclick="document.getElementById('si').focus()">Cerca Bandi</a></li>
         <li><a href="login.html">Accedi</a></li>
-        <li><a href="register.html">Registrati</a></li>
       </ul>
     </div>
     <div class="f-col">
       <h4>Legale</h4>
       <ul class="f-links">
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Termini e Condizioni</a></li>
-        <li><a href="#" onclick="acceptCookies('none'); localStorage.removeItem('cookieConsent'); window.location.reload();">Cookie Settings</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Termini</a></li>
       </ul>
     </div>
     <div class="f-col">
       <h4>Contatti</h4>
       <ul class="f-links">
         <li><a href="mailto:info@bandipmi.com">info@bandipmi.com</a></li>
-        <li><a href="tel:+390123456789">+39 012 345 6789</a></li>
-        <li>Via dell'Innovazione, 1<br>70121 Bari (BA)</li>
+        <li>Bari (BA)</li>
       </ul>
     </div>
   </div>
-  <div class="f-btm">
-    <p>&copy; 2026 BandiPMI. Tutti i diritti riservati. P.IVA 01234567890</p>
-  </div>
+  <div class="f-btm"><p>&copy; 2026 BandiPMI. Tutti i diritti riservati.</p></div>
 </footer>
 
 <script>
-var supabaseUrl = 'https://kpgqagunzbgtlsxgeoub.supabase.co';
-var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwZ3FhZ3VuemJndGxzeGdlb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NjQ4ODAsImV4cCI6MjA4OTE0MDg4MH0.ee94NWJEz1xRxugiWOn1_ognhrEEDEm7_-_QxPQyB_g';
-var supabase = supabase.createClient(supabaseUrl, supabaseKey);
-var bandoSelezionato = '';
+const supabaseUrl = 'https://kpgqagunzbgtlsxgeoub.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwZ3FhZ3VuemJndGxzeGdlb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NjQ4ODAsImV4cCI6MjA4OTE0MDg4MH0.ee94NWJEz1xRxugiWOn1_ognhrEEDEm7_-_QxPQyB_g';
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+let bandoSelezionato = '';
 
 async function checkAuth() {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) {
-    window.location.href = 'login.html';
-  } else {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; }
+  else {
     document.getElementById('authMask').style.display = 'none';
     document.body.classList.add('ready');
     loadBandi();
@@ -271,277 +253,153 @@ async function checkAuth() {
 async function loadBandi() {
   const container = document.getElementById('bandiContainer');
   const modalContainer = document.getElementById('modalsContainer');
-  
-  try {
-    const { data: bandi, error } = await supabase
-      .from('bandi')
-      .select('*')
-      .order('scadenza', { ascending: true });
-
-    if (error) throw error;
-
-    if (!bandi || bandi.length === 0) {
-      container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--m);">Nessun bando disponibile al momento.</div>';
-      return;
-    }
-
-    container.innerHTML = '';
-    modalContainer.innerHTML = '';
-
-    bandi.forEach(b => {
-      const isClosed = b.scadenza && new Date(b.scadenza) < new Date();
-      container.innerHTML += createCardHTML(b, isClosed);
-      modalContainer.innerHTML += createModalHTML(b);
-    });
-
-  } catch (err) {
-    console.error('Error loading bandi:', err);
-    container.innerHTML = '<div style="text-align:center; padding:40px; color:#dc2626;">Errore nel caricamento dei bandi. Riprova più tardi.</div>';
+  const { data: bandi, error } = await supabaseClient.from('bandi').select('*').order('created_at', { ascending: false });
+  if (error || !bandi) { 
+    container.innerHTML = '<div style="text-align:center; padding:40px; color:red;">Errore caricamento.</div>'; 
+    return; 
   }
+  container.innerHTML = ''; modalContainer.innerHTML = '';
+  bandi.forEach(b => {
+    const isClosed = b.scadenza && new Date(b.scadenza) < new Date();
+    container.innerHTML += createCardHTML(b, isClosed);
+    modalContainer.innerHTML += createModalHTML(b);
+  });
 }
 
 function createCardHTML(b, isClosed) {
   const tagsStr = (b.tags || []).join(' ');
-  const badges = `
-    <span class="badge ${isClosed ? '' : 'bg'}">${isClosed ? '🔴 CHIUSO' : '✅ ' + formatDateRange(b.data_apertura, b.scadenza)}</span>
-    <span class="badge bb">${b.budget_max || ''}</span>
-    <span class="badge bo">${b.area_geografica || ''}</span>
-  `;
-  
   const pills = (b.requisiti_pillole || []).map(p => `<div class="pill">${p}</div>`).join('');
-  
   return `
-    <div class="card ${isClosed ? 'closed' : ''}" data-tags="${tagsStr}" ${isClosed ? '' : `onclick="apri('${b.id}')"`}>
+    <div class="card ${isClosed ? 'closed' : ''}" data-tags="${tagsStr}" onclick="${isClosed ? '' : `apri('${b.id}')`}">
       ${isClosed ? '<div class="status-tag">CHIUSO</div>' : ''}
       <div class="ch">
         <div class="ci" style="background:${b.colore_icona || '#f3f4f6'}">${b.icona || '🚀'}</div>
-        <div>
-          <div class="ct">${b.titolo}</div>
-          <div class="ce">${b.ente || ''} · ${b.riferimento || ''}</div>
-        </div>
+        <div><div class="ct">${b.titolo}</div><div class="ce">${b.ente || ''}</div></div>
       </div>
-      <div class="cm">${badges}</div>
+      <div class="cm">
+        <span class="badge ${isClosed ? '' : 'bg'}">${isClosed ? '🔴 CHIUSO' : '✅ ' + formatDateRange(b.data_apertura, b.scadenza)}</span>
+        <span class="badge bb">${b.budget_max || ''}</span>
+      </div>
       <div class="pl">✔ Rientri se…</div>
       <div class="pills">${pills}</div>
-      <div class="db">
-        <span class="dt">Scadenza: <strong>${b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : 'Fondi disponibili'}</strong></span>
-        <button class="btn-d ${isClosed ? 'closed' : ''}" ${isClosed ? 'disabled' : ''}>${isClosed ? 'Bando Chiuso' : 'Scopri di più →'}</button>
-      </div>
-    </div>
-  `;
+      <div class="db"><span class="dt">Scadenza: <strong>${b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : 'Disponibile'}</strong></span><button class="btn-d">Scopri di più →</button></div>
+    </div>`;
 }
 
 function createModalHTML(b) {
-  const cosPaga = (b.cosa_paga || []).map(p => `<li><span class="dot">✔</span>${p}</li>`).join('');
   const chiPuo = (b.chi_puo_accedere || []).map(p => `<li><span class="dot">→</span>${p}</li>`).join('');
   const regioni = (b.regioni_ammesse || []).map(r => `<div class="rc ${r === 'Puglia' ? 'hl2' : ''}">${r === 'Puglia' ? '🌿 ' : ''}${r}</div>`).join('');
+  const cosPaga = (b.cosa_paga || []).map(p => `<li><span class="dot">✔</span>${p}</li>`).join('');
+  const cosNonPaga = (b.cosa_non_paga || []).map(p => `<li><span class="dot">✗</span><span style="color:#6b7280; text-decoration:line-through;">NON paga: ${p}</span></li>`).join('');
 
   return `
     <div class="ov" id="${b.id}">
      <div class="modal">
       <div class="mh">
-       <div class="mt">${b.titolo}</div>
+       <div class="mt">${b.icona || '🎓'} ${b.titolo}</div>
        <div class="me">${b.riferimento || ''} · Gestore: ${b.ente || ''}</div>
        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
         <span class="badge bg">✅ ${formatDateRange(b.data_apertura, b.scadenza)}</span>
         <span class="badge bb">${b.budget_max || ''}</span>
+        <span class="badge bo">${b.area_geografica || ''}</span>
        </div>
       </div>
       <div class="mb">
+       <div class="ms"><h3>🎯 Cos'è</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">${b.descrizione_semplice || ''}</p></div>
+       <div class="ms"><h3>✅ Chi può accedere?</h3><ul class="pl2">${chiPuo}</ul><div class="rg">${regioni}</div></div>
+       
        <div class="ms">
-        <h3>🎯 Cos'è – In parole semplici</h3>
-        <p style="font-size:14.5px;line-height:1.6;color:#374151;">${b.descrizione_breve || ''}</p>
+        <h3>💵 Quanto puoi ricevere?</h3>
+        <div class="cg">
+         <div class="ccard sm"><div class="cperc">${b.quanto_base_perc||'50%'}</div><div class="ctipo">${b.quanto_base_titolo||'BASE'}</div><div class="cdesc">${b.quanto_base_desc||''}</div></div>
+         <div class="ccard md"><div class="cperc">${b.quanto_bonus_perc||''}</div><div class="ctipo">${b.quanto_bonus_titolo||'BONUS'}</div><div class="cdesc">${b.quanto_bonus_desc||''}</div></div>
+        </div>
+        ${b.quanto_banner_testo ? `<div class="bx"><div class="bxi">🏆</div><div class="bxt"><div class="bxtt">${b.quanto_banner_testo}</div></div></div>` : ''}
        </div>
+
+       <div class="ms"><h3>📚 Cosa paga?</h3><ul class="pl2">${cosPaga}${cosNonPaga}</ul></div>
+
        <div class="ms">
-        <h3>✅ Chi può accedere?</h3>
-        <ul class="pl2">${chiPuo}</ul>
-        <div class="rg">${regioni}</div>
-       </div>
-       <div class="ms">
-        <h3>📚 Cosa paga il bando?</h3>
-        <ul class="pl2">${cosPaga}</ul>
-       </div>
-       <div class="ms">
-        <h3>🧮 Simulatore Contributo</h3>
-        <p style="font-size:13px; color:var(--m);">Usa il modulo di contatto per una simulazione personalizzata basata sui tuoi dipendenti e investimenti.</p>
+        <h3>🧮 Simula il tuo contributo</h3>
+        <div class="sim">
+         <h3>Quanto rimborso ricevi?</h3>
+         <p>Stima basata su parametri ufficiali.</p>
+         <div class="sr">
+          <div class="sg"><label>Dimensione azienda</label><select id="sDim-${b.id}"><option value="micro">Micro (1-9 dip.)</option><option value="piccola">Piccola (10-49 dip.)</option><option value="media">Media (50-249 dip.)</option></select></div>
+          <div class="sg"><label>Regione</label><select id="sReg-${b.id}" onchange="updateTariffa('${b.id}')"><option value="puglia">Puglia</option><option value="sud">Altro Sud</option><option value="nord">Nord/Centro</option></select></div>
+         </div>
+         <div class="sr">
+          <div class="sg"><label>Dipendenti</label><input type="number" id="sDip-${b.id}" value="5"/></div>
+          <div class="sg"><label>Ore Formazione</label><input type="number" id="sOre-${b.id}" value="40"/></div>
+         </div>
+         <div class="sr">
+          <div class="sg"><label>Sovraregionale?</label><select id="sSov-${b.id}"><option value="no">No</option><option value="si">Sì (+bonus)</option></select></div>
+          <div class="sg"><label>Tariffa Oraria (€)</label><input type="text" id="sTar-${b.id}" value="45.03" readonly style="background:#e8f4e8; color:#15803d; font-weight:700;"/></div>
+         </div>
+         <button class="btn-sim" onclick="runSim('${b.id}', ${b.intensita_base||50}, ${b.intensita_bonus||20}, ${b.intensita_max||70})">⚡ Calcola</button>
+         <div class="sres" id="sRes-${b.id}">
+          <div class="sam" id="sAmt-${b.id}">€ 0</div>
+          <div class="sbk">
+           <div class="si"><div class="sv" id="sPerc-${b.id}">0%</div><div class="sl">Contrib.</div></div>
+           <div class="si"><div class="sv" id="sSpesa-${b.id}">€0</div><div class="sl">Ammissibile</div></div>
+          </div>
+         </div>
+        </div>
        </div>
       </div>
-      <div class="mf">
-       <button class="btn-p" onclick="apriForm('${b.titolo.replace(/'/g, "\\'")}')">🚀 Voglio Partecipare – Contattami</button>
-       <button class="btn-x" onclick="chiudi('${b.id}')">✕ Chiudi</button>
-      </div>
+      <div class="mf"><button class="btn-p" onclick="apriForm('${b.titolo.replace(/'/g, "\\'")}')">🚀 Partecipa</button><button class="btn-x" onclick="chiudi('${b.id}')">✕ Chiudi</button></div>
      </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function formatDateRange(start, end) {
-  if (!start && !end) return 'Sempre attivo';
-  const s = start ? new Date(start).toLocaleDateString('it-IT', { day: 'numeric', month: 'short' }) : '';
-  const e = end ? new Date(end).toLocaleDateString('it-IT', { day: 'numeric', month: 'short' }) : 'Esaurimento';
-  return `${s} → ${e}`;
+function updateTariffa(id) {
+  const reg = document.getElementById('sReg-'+id).value;
+  document.getElementById('sTar-'+id).value = (reg==='puglia'?'45.03':'41.19');
 }
 
+function runSim(id, base, bonusVal, max) {
+  const dim = document.getElementById('sDim-'+id).value;
+  const reg = document.getElementById('sReg-'+id).value;
+  const dip = parseInt(document.getElementById('sDip-'+id).value)||1;
+  const ore = parseInt(document.getElementById('sOre-'+id).value)||1;
+  const sov = document.getElementById('sSov-'+id).value;
+  const tariffa = parseFloat(document.getElementById('sTar-'+id).value)||30;
+  if(reg==='nord'){ alert('Solo Sud Italia.'); return; }
+  const costo = dip * ore * tariffa;
+  const spesa = Math.min(Math.max(costo, 10000), 60000);
+  const perc = Math.min(base + (sov==='si'?bonusVal:0), (dim==='media'?60:max));
+  const contrib = Math.round(spesa * perc / 100);
+  document.getElementById('sAmt-'+id).textContent = '€ ' + contrib.toLocaleString('it-IT');
+  document.getElementById('sPerc-'+id).textContent = perc + '%';
+  document.getElementById('sSpesa-'+id).textContent = '€ ' + spesa.toLocaleString('it-IT');
+  document.getElementById('sRes-'+id).classList.add('show');
+}
+
+function formatDateRange(s, e) {
+  if (!s && !e) return 'Sempre attivo';
+  const d1 = s ? new Date(s).toLocaleDateString('it-IT',{day:'numeric',month:'short'}) : '';
+  const d2 = e ? new Date(e).toLocaleDateString('it-IT',{day:'numeric',month:'short'}) : 'Fine';
+  return d1 + ' → ' + d2;
+}
 function apri(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function chiudi(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-function apriForm(nome){
-  bandoSelezionato = nome;
-  document.querySelectorAll('.ov.open').forEach(function(m){m.classList.remove('open');});
-  document.getElementById('fSub').textContent='Bando: '+nome+' - Ti contatteremo entro 24 ore.';
-  document.getElementById('mForm').classList.add('open');
-  document.body.style.overflow='hidden';
-}
+function apriForm(n){ bandoSelezionato=n; document.getElementById('fSub').textContent='Bando: '+n; document.getElementById('mForm').classList.add('open'); }
 async function inviaForm(){
-  var btn = document.getElementById('btnInvia');
-  var data = {
-    bando_nome: bandoSelezionato,
-    nome_cognome: document.getElementById('fNome').value,
-    ragione_sociale: document.getElementById('fRag').value,
-    partita_iva: document.getElementById('fIva').value,
-    n_dipendenti: document.getElementById('fDip').value,
-    regione: document.getElementById('fReg').value,
-    telefono: document.getElementById('fTel').value,
-    email: document.getElementById('fEmail').value
-  };
-
-  if(!data.nome_cognome || !data.ragione_sociale || !data.partita_iva || !data.telefono || !data.email){
-    alert('Per favore, compila tutti i campi obbligatori (*)');
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = '⏳ Invio in corso...';
-
-  try {
-    const { error } = await supabase.from('leads').insert([data]);
-    if (error) throw error;
-    alert('Richiesta inviata con successo! Ti contatteremo entro 24 ore.');
-    chiudi('mForm');
-    // Reset form
-    document.getElementById('fNome').value = '';
-    document.getElementById('fRag').value = '';
-    document.getElementById('fIva').value = '';
-    document.getElementById('fTel').value = '';
-    document.getElementById('fEmail').value = '';
-  } catch (err) {
-    console.error('Error saving lead:', err);
-    alert('Si è verificato un errore durante l\'invio. Riprova più tardi.');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '✅ Invia – Ti contatto entro 24h';
-  }
+  var d={bando_nome:bandoSelezionato,nome_cognome:document.getElementById('fNome').value,ragione_sociale:document.getElementById('fRag').value,partita_iva:document.getElementById('fIva').value,n_dipendenti:document.getElementById('fDip').value,regione:document.getElementById('fReg').value,telefono:document.getElementById('fTel').value,email:document.getElementById('fEmail').value};
+  if(!d.nome_cognome||!d.telefono||!d.email){alert('Completa i campi.');return;}
+  await supabaseClient.from('leads').insert([d]);
+  alert('Inviato!'); chiudi('mForm');
 }
-function setF(tag,btn){document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.querySelectorAll('.card').forEach(function(c){c.style.display=(tag==='tutti'||c.dataset.tags.indexOf(tag)>-1)?'':'none';});}
-function flt(){var q=document.getElementById('si').value.toLowerCase();document.querySelectorAll('.card').forEach(function(c){c.style.display=c.innerText.toLowerCase().indexOf(q)>-1?'':'none';});}
-document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov){ov.classList.remove('open');document.body.style.overflow='';}});});
-var tariffe={'puglia':45.03,'campania':46.13,'sicilia':47.22,'calabria':41.19,'basilicata':47.22,'sardegna':46.13,'molise':45.03,'nord':0};
-var sRegEl=document.getElementById('sReg');
-if(sRegEl){sRegEl.addEventListener('change',function(){var t=tariffe[this.value]||30;var el=document.getElementById('sTar');if(el){el.value=(this.value==='nord'?'-':t);}});}
-function simula(){
-  var dim=document.getElementById('sDim').value;
-  var reg=document.getElementById('sReg').value;
-  var dip=parseInt(document.getElementById('sDip').value)||1;
-  var ore=parseInt(document.getElementById('sOre').value)||1;
-  var sov=document.getElementById('sSov').value;
-  var el=document.getElementById('sRes');
-
-  if(reg==='nord'){
-    document.getElementById('sAmt').textContent='Non ammesso';
-    document.getElementById('sAml').textContent='Questo bando richiede una sede operativa in una regione del Sud Italia';
-    document.getElementById('sPerc').textContent='0%';
-    document.getElementById('sSpesa').textContent='-';
-    document.getElementById('sTasca').textContent='-';
-    document.getElementById('sNote').textContent='Se hai una filiale, magazzino o punto operativo al Sud potresti comunque rientrare. Contattaci per una valutazione gratuita.';
-    el.classList.add('show');return;
-  }
-
-  // Tariffe orarie per regione (Allegato 3, DD 26/01/2026 - costi unitari semplificati FSE+)
-  var tariffe={'puglia':45.03,'campania':46.13,'sicilia':47.22,'calabria':41.19,'basilicata':47.22,'sardegna':46.13,'molise':45.03};
-  var tariffa=tariffe[reg]||30;
-  document.getElementById('sTar').value=tariffa;
-
-  // Formula ufficiale bando: Costo ammissibile = N_dip × N_ore × Tariffa
-  var costoCalc=dip*ore*tariffa;
-
-  // Vincoli bando: min 10.000, max 60.000
-  var note='';
-  if(costoCalc<10000){
-    note='⚠️ Il costo calcolato (€'+costoCalc.toLocaleString('it-IT')+') è sotto la soglia minima di €10.000. ';
-    note+='Prova ad aumentare il numero di dipendenti o le ore di formazione per rientrare nel bando.';
-    document.getElementById('sAmt').textContent='Sotto soglia minima';
-    document.getElementById('sAml').textContent='Servono almeno €10.000 di costo ammissibile';
-    document.getElementById('sPerc').textContent='-';
-    document.getElementById('sSpesa').textContent='€ '+costoCalc.toLocaleString('it-IT');
-    document.getElementById('sTasca').textContent='-';
-    document.getElementById('sNote').textContent=note;
-    el.classList.add('show');return;
-  }
-  var spesa=Math.min(costoCalc,60000);
-  if(costoCalc>60000){note='ℹ️ Il costo calcolato (€'+costoCalc.toLocaleString('it-IT')+') supera il massimo di €60.000. Il contributo viene calcolato sul tetto massimo ammissibile. ';}
-
-  // Intensità aiuto
-  var base=50;
-  var bonus=(sov==='si')?(dim==='media'?10:20):0;
-  var tot=Math.min(base+bonus,dim==='media'?60:70);
-  var contrib=Math.round(spesa*tot/100);
-  var tasca=spesa-contrib;
-
-  document.getElementById('sAmt').textContent='€ '+contrib.toLocaleString('it-IT');
-  document.getElementById('sAml').textContent='a fondo perduto stimato (non da restituire)';
-  document.getElementById('sPerc').textContent=tot+'%';
-  document.getElementById('sSpesa').textContent='€ '+spesa.toLocaleString('it-IT');
-  document.getElementById('sTasca').textContent='€ '+tasca.toLocaleString('it-IT');
-
-  note+='Formula: '+dip+' dip. × '+ore+' ore × €'+tariffa+'/ora = €'+costoCalc.toLocaleString('it-IT')+' di costo ammissibile. ';
-  note+='Intensità aiuto: '+tot+'% (base 50%'+(bonus>0?' + '+bonus+'% bonus sovraregionale':'')+').';
-  if(sov==='si')note+=' Per il progetto sovraregionale servono PMI di almeno 2 regioni del Sud (max 10 imprese).';
-  document.getElementById('sNote').textContent=note;
-  el.classList.add('show');
-}
-
-// Auth State Handling
-supabase.auth.onAuthStateChange((event, session) => {
-  const userHeader = document.getElementById('userHeader');
-  if (session) {
-    userHeader.innerHTML = `
-      <div style="display:flex; align-items:center; gap:12px;">
-        <span style="font-size:13px; font-weight:700; color:#fff;">${session.user.email}</span>
-        <button onclick="logout()" class="btn-d" style="background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3);">Esci</button>
-      </div>
-    `;
-  } else {
-    userHeader.innerHTML = `<a href="login.html" class="btn-d" style="text-decoration: none; display: inline-block;">Accedi</a>`;
-  }
+function setF(t,b){document.querySelectorAll('.fb').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.card').forEach(c=>c.style.display=(t==='tutti'||c.dataset.tags.indexOf(t)>-1)?'':'none');}
+function flt(){var q=document.getElementById('si').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>c.style.display=c.innerText.toLowerCase().indexOf(q)>-1?'':'none');}
+supabaseClient.auth.onAuthStateChange((ev, ses) => {
+  const h = document.getElementById('userHeader');
+  if (ses) h.innerHTML = `<button onclick="logout()" class="btn-d">Esci (${ses.user.email})</button>`;
+  else h.innerHTML = `<a href="login.html" class="btn-d">Accedi</a>`;
 });
-
-async function logout() {
-  await supabase.auth.signOut();
-  window.location.reload();
-}
-
-// Cookie Consent Logic
-function checkCookies() {
-  if (!localStorage.getItem('cookieConsent')) {
-    document.getElementById('cookieBanner').style.display = 'flex';
-  }
-}
-function acceptCookies(type) {
-  localStorage.setItem('cookieConsent', type);
-  document.cookie = "cookieConsent=" + type + "; max-age=" + (60*60*24*365) + "; path=/";
-  document.getElementById('cookieBanner').style.display = 'none';
-  
-  // Optionally save to user metadata if logged in
-  saveConsentToProfile(type);
-}
-async function saveConsentToProfile(type) {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session) {
-    await supabase.auth.updateUser({
-      data: { cookie_consent: type, consent_date: new Date().toISOString() }
-    });
-  }
-}
-checkCookies();
+async function logout(){ await supabaseClient.auth.signOut(); window.location.reload(); }
+function acceptCookies(t){ localStorage.setItem('cookieConsent',t); document.getElementById('cookieBanner').style.display='none'; }
+if(!localStorage.getItem('cookieConsent')) document.getElementById('cookieBanner').style.display='flex';
 </script>
 </body>
 </html>
