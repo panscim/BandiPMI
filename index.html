@@ -141,6 +141,22 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:10px;}
 .rc{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;color:#0369a1;text-align:center;}
 .rc.hl2{background:#dcfce7;border-color:#86efac;color:#15803d;}
+
+/* SAVE & SHARE BUTTONS */
+.card-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 5; }
+.btn-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: 1px solid #eef2fb; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.btn-icon:hover { transform: scale(1.1); background: #fff; }
+.btn-icon.active { color: #ef4444; border-color: #fecaca; background: #fef2f2; }
+
+/* MODAL CLOSE FIX */
+.btn-x-fixed { position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(15, 23, 42, 0.8); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: 2px solid #fff; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+/* PROFILE & CONTACTS */
+.view-section { display: none; }
+.view-section.active { display: block; }
+.profile-photo { width: 100px; height: 100px; background: #e2e8f0; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; border: 4px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+.profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+.photo-edit { position: absolute; bottom: 0; right: 0; background: var(--p); color: #fff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid #fff; cursor: pointer; }
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
 .ccard{border-radius:14px;padding:16px;text-align:center;}
 .ccard.sm{background:linear-gradient(135deg,#dbeafe,#eff6ff);border:2px solid #93c5fd;}
@@ -212,6 +228,7 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   .nav-item i { font-style: normal; font-size: 22px; transition: transform 0.2s; }
   .nav-item.active { color: var(--p); }
   .nav-item.active i { transform: translateY(-2px); }
+  .status-tag { display: none !important; }
 }
 
 /* PRINT STYLES */
@@ -260,7 +277,6 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   <p>Trova i contributi giusti per la tua azienda, in 2 minuti</p>
   <div class="sb">
     <input type="text" id="si" placeholder="Cerca settore, attività…" oninput="flt()"/>
-    <button>🔍</button>
   </div>
 </header>
 
@@ -274,15 +290,59 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 </div>
 
 <main>
-  <div class="cnt">
-    <div class="cc"><div class="cn">5</div><div class="cl">Bandi attivi</div></div>
-    <div class="cc"><div class="cn">€50M</div><div class="cl">Fondi Competenze PMI</div></div>
-    <div class="cc"><div class="cn">70%</div><div class="cl">Max contributo</div></div>
-    <div class="cc"><div class="cn">21 apr</div><div class="cl">Apertura sportello</div></div>
+  <div id="bandiSections" class="view-section active">
+    <div class="cnt">
+      <div class="cc"><div class="cn">5</div><div class="cl">Bandi attivi</div></div>
+      <div class="cc"><div class="cn">€50M</div><div class="cl">Fondi Competenze PMI</div></div>
+      <div class="cc"><div class="cn">70%</div><div class="cl">Max contributo</div></div>
+      <div class="cc"><div class="cn">21 apr</div><div class="cl">Apertura sportello</div></div>
+    </div>
+    <div class="st">📋 Bandi disponibili per la tua PMI</div>
+    <div id="bandiContainer">
+      <div style="text-align:center; padding:40px; color:var(--m);">⏳ Caricamento bandi...</div>
+    </div>
   </div>
-  <div class="st">📋 Bandi disponibili per la tua PMI</div>
-  <div id="bandiContainer">
-    <div style="text-align:center; padding:40px; color:var(--m);">⏳ Caricamento bandi...</div>
+
+  <div id="savedSection" class="view-section">
+    <div class="st">❤️ I tuoi bandi salvati</div>
+    <div id="savedContainer" style="padding: 20px 0;">
+      <div style="text-align:center; padding:80px 20px; color:var(--m);">
+        <i style="font-size:40px; display:block; margin-bottom:10px; font-style:normal;">❤️</i>
+        Nessun bando salvato ancora.
+      </div>
+    </div>
+  </div>
+
+  <div id="contactsSection" class="view-section">
+    <div class="st">✉️ Contattaci</div>
+    <div class="faq-container" style="margin-top: 20px;">
+      <h3 style="margin-bottom:15px;">Hai bisogno di supporto?</h3>
+      <p style="font-size:14px; color:var(--m); margin-bottom:25px;">Il nostro team di esperti è a tua disposizione per una consulenza gratuita.</p>
+      <button class="btn-p" onclick="apriForm('Consulenza Generale')">🚀 Inizia una chat</button>
+      <div style="margin-top:30px; display:flex; flex-direction:column; gap:15px;">
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;"><strong>📞 Telefono:</strong> +39 080 1234567</div>
+        <div style="display:flex; align-items:center; gap:12px; font-size:14px;"><strong>📧 Email:</strong> info@bandipmi.it</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="profileSection" class="view-section">
+    <div class="st">👤 Il tuo Profilo</div>
+    <div class="faq-container" style="margin-top: 20px; text-align:center;">
+      <div class="profile-photo" id="profilePhoto">
+        <span id="photoPlaceholder">👤</span>
+      </div>
+      <h2 id="profileNameDisplay" style="margin-bottom:5px;">Il tuo Nome</h2>
+      <p id="profileEmailDisplay" style="color:var(--m); font-size:14px; margin-bottom:25px;">email@azienda.it</p>
+      
+      <div style="text-align:left; max-width:400px; margin:0 auto;">
+        <div class="fg"><label>Nome e Cognome</label><input type="text" id="pNome" placeholder="es. Mario Rossi" onchange="saveProfile()"/></div>
+        <div class="fg"><label>Azienda</label><input type="text" id="pAzienda" placeholder="es. Rossi S.r.l." onchange="saveProfile()"/></div>
+        <div class="fg"><label>Foto URL (Placeholder)</label><input type="text" id="pPhotoUrl" placeholder="https://..." onchange="saveProfile()"/></div>
+      </div>
+      
+      <button class="btn-p" onclick="logout()" style="background:#ef4444; margin-top:30px;">🚪 Esci dall'account</button>
+    </div>
   </div>
 </main>
 
@@ -317,7 +377,8 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 
 <nav class="bottom-nav">
   <div class="nav-item active" id="nav-dashboard" onclick="navTo('dashboard')"><i>🏠</i><span>Home</span></div>
-  <div class="nav-item" id="nav-cerca" onclick="navTo('cerca')"><i>🔍</i><span>Cerca</span></div>
+  <div class="nav-item" id="nav-salvati" onclick="navTo('salvati')"><i>❤️</i><span>Salvati</span></div>
+  <div class="nav-item" id="nav-contatti" onclick="navTo('contatti')"><i>✉️</i><span>Contatti</span></div>
   <div class="nav-item" id="nav-profilo" onclick="navTo('profilo')"><i>👤</i><span>Profilo</span></div>
 </nav>
 
@@ -374,55 +435,69 @@ function stampaBando(id) {
   window.print();
 }
 
-async function loadBandi() {
+let currentPage = 0;
+const pageSize = 5;
+let loading = false;
+let hasMore = true;
+
+async function loadBandi(reset = true) {
+  if (loading || (!hasMore && !reset)) return;
+  loading = true;
+  if (reset) { currentPage = 0; hasMore = true; document.getElementById('bandiContainer').innerHTML = ''; document.getElementById('modalsContainer').innerHTML = ''; }
+
   const container = document.getElementById('bandiContainer');
   const modalContainer = document.getElementById('modalsContainer');
-  const { data: bandi, error } = await supabaseClient.from('bandi').select('*').order('created_at', { ascending: false });
-  if (error || !bandi) { 
-    container.innerHTML = '<div style="text-align:center; padding:40px; color:red;">Errore caricamento.</div>'; 
-    return; 
-  }
-  container.innerHTML = ''; modalContainer.innerHTML = '';
   
+  const from = currentPage * pageSize;
+  const to = from + pageSize - 1;
+
+  const { data: bandi, error } = await supabaseClient.from('bandi').select('*').order('created_at', { ascending: false }).range(from, to);
+  
+  if (error) { loading = false; return; }
+  if (bandi.length < pageSize) hasMore = false;
+
   const now = new Date();
-  const groups = { active: [], upcoming: [], closed: [] };
-  
   bandi.forEach(b => {
     const start = b.data_apertura ? new Date(b.data_apertura) : null;
     const end = b.scadenza ? new Date(b.scadenza) : null;
-    
     let status = 'active';
     if (end && end < now) status = 'closed';
     else if (start && start > now) status = 'upcoming';
     
-    groups[status].push(b);
-    modalContainer.innerHTML += createModalHTML(b);
+    container.insertAdjacentHTML('beforeend', createCardHTML(b, status));
+    modalContainer.insertAdjacentHTML('beforeend', createModalHTML(b));
   });
 
-  const renderSection = (list, status) => {
-    if (list.length === 0) return '';
-    const statusLabel = status === 'active' ? 'Bandi Attivi' : status === 'upcoming' ? 'In Prossima Apertura' : 'Bandi Chiusi';
-    
-    return `
-      <div class="status-section">
-        <div class="section-header ${status}">
-          <div class="dot"></div>
-          <h2>${statusLabel}</h2>
-        </div>
-        <div>${list.map(b => createCardHTML(b, status)).join('')}</div>
-      </div>`;
-  };
+  if (!hasMore && currentView === 'dashboard') {
+    container.insertAdjacentHTML('beforeend', `
+      <div class="faq-container">
+        <h2 class="faq-title">Domande Frequenti</h2>
+        ${renderFaqList(globalFaqs)}
+      </div>
+    `);
+  }
 
-  container.innerHTML = 
-    renderSection(groups.upcoming, 'upcoming') +
-    renderSection(groups.active, 'active') +
-    renderSection(groups.closed, 'closed') +
-    `
-    <div class="faq-container">
-      <h2 class="faq-title">Domande Frequenti</h2>
-      ${renderFaqList(globalFaqs)}
-    </div>
-    `;
+  currentPage++;
+  loading = false;
+  
+  // Setup Observer
+  setupObserver();
+}
+
+function setupObserver() {
+  const sentinelId = 'scroll-sentinel';
+  let sentinel = document.getElementById(sentinelId);
+  if (sentinel) sentinel.remove();
+  
+  document.getElementById('bandiContainer').insertAdjacentHTML('beforeend', `<div id="${sentinelId}" style="height:20px;"></div>`);
+  
+  const obs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && hasMore && currentView === 'dashboard') {
+      loadBandi(false);
+    }
+  }, { threshold: 0.1 });
+  
+  obs.observe(document.getElementById(sentinelId));
 }
 
 const globalFaqs = [
@@ -454,6 +529,7 @@ function renderFaqList(faqs) {
 function createCardHTML(b, status) {
   const tagsStr = (b.tags || []).join(' ');
   const pills = (b.requisiti_pillole || []).map(p => `<div class="pill">${p}</div>`).join('');
+  const saved = isSaved(b.id);
   
   let statusBadge = '';
   if (status === 'closed') statusBadge = '<div class="stamp-wrapper"><div class="stamp">CHIUSO</div></div>';
@@ -471,6 +547,10 @@ function createCardHTML(b, status) {
   
   return `
     <div class="card ${status}" data-tags="${tagsStr}" onclick="${status === 'closed' ? '' : `apri('${b.id}')`}">
+      <div class="card-actions" onclick="event.stopPropagation()">
+        <div class="btn-icon ${saved ? 'active' : ''}" onclick="toggleSave('${b.id}', this)">${saved ? '❤️' : '🤍'}</div>
+        <div class="btn-icon" onclick="shareBando('${b.id}', '${b.titolo.replace(/'/g, "\\'")}')">🔗</div>
+      </div>
       ${statusBadge}
       <div class="ch">
         <div class="ci" style="background:${b.colore_icona || '#f3f4f6'}">${b.icona || '🚀'}</div>
@@ -517,10 +597,13 @@ function createModalHTML(b) {
 
   return `
     <div class="ov" id="${b.id}">
+     <div class="btn-x-fixed hide-desktop" onclick="chiudi('${b.id}')">✕</div>
      <div class="modal">
       <div class="mh">
        <div class="modal-actions">
         <button class="btn-action primary" onclick="stampaBando('${b.id}')">🖨️ Stampa PDF Piano</button>
+        <button class="btn-action" onclick="toggleSave('${b.id}', null)">❤️ Salva</button>
+        <button class="btn-action" onclick="shareBando('${b.id}', '${b.titolo.replace(/'/g, "\\'")}')">🔗 Condividi</button>
         ${docs.map(d => `<button class="btn-action" onclick="window.open('${d.url}', '_blank')">📄 ${d.label}</button>`).join('')}
        </div>
        <div class="mt">${b.icona || '🎓'} ${b.titolo}</div>
@@ -665,23 +748,93 @@ supabaseClient.auth.onAuthStateChange((ev, ses) => {
     const btn = `<button onclick="logout()" class="btn-d">Esci <span class="hide-mobile">(${ses.user.email})</span></button>`;
     h.innerHTML = btn;
     if(u) u.textContent = ses.user.email;
+    loadProfile();
   } else {
     h.innerHTML = `<a href="login.html" class="btn-d">Accedi</a>`;
     if(u) u.textContent = 'Nessun account collegato';
   }
 });
 
+let currentView = 'dashboard';
 function navTo(t) {
+  currentView = t;
   document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
   document.getElementById('nav-' + t).classList.add('active');
-  if (t === 'dashboard') { window.scrollTo({top: 0, behavior: 'smooth'}); }
-  if (t === 'cerca') { document.getElementById('si').focus(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+  
+  // View Switching
+  document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+  if (t === 'dashboard') { document.getElementById('bandiSections').classList.add('active'); window.scrollTo({top: 0, behavior: 'smooth'}); }
+  if (t === 'salvati') { document.getElementById('savedSection').classList.add('active'); renderSaved(); }
+  if (t === 'contatti') { document.getElementById('contactsSection').classList.add('active'); }
   if (t === 'profilo') { 
+    document.getElementById('profileSection').classList.add('active');
     const ses = supabaseClient.auth.getSession();
     ses.then(({data}) => {
       if(!data.session) window.location.href = 'login.html';
-      else apri('mProfilo');
     });
+  }
+}
+
+// SAVED ITEMS LOGIC
+function getSaved() { return JSON.parse(localStorage.getItem('saved_bandi') || '[]'); }
+function isSaved(id) { return getSaved().includes(id); }
+function toggleSave(id, el) {
+  let saved = getSaved();
+  if (saved.includes(id)) {
+    saved = saved.filter(x => x !== id);
+    if(el) { el.classList.remove('active'); el.innerHTML = '🤍'; }
+  } else {
+    saved.push(id);
+    if(el) { el.classList.add('active'); el.innerHTML = '❤️'; }
+  }
+  localStorage.setItem('saved_bandi', JSON.stringify(saved));
+  if (currentView === 'salvati') renderSaved();
+}
+
+function shareBando(id, title) {
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: title, text: 'Guarda questo bando su BandiPMI!', url: url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(url).then(() => alert('Link copiato negli appunti!'));
+  }
+}
+
+async function renderSaved() {
+  const ids = getSaved();
+  const container = document.getElementById('savedContainer');
+  if (ids.length === 0) {
+    container.innerHTML = `<div style="text-align:center; padding:80px 20px; color:var(--m);"><i style="font-size:40px; display:block; margin-bottom:10px; font-style:normal;">❤️</i>Nessun bando salvato ancora.</div>`;
+    return;
+  }
+  container.innerHTML = '<div style="text-align:center; padding:20px;">⌛ Caricamento salvati...</div>';
+  const { data } = await supabaseClient.from('bandi').select('*').in('id', ids);
+  if (data) {
+    container.innerHTML = data.map(b => createCardHTML(b, b.is_active ? 'active' : 'closed')).join('');
+  }
+}
+
+// PROFILE LOGIC
+function saveProfile() {
+  const d = { 
+    nome: document.getElementById('pNome').value,
+    azienda: document.getElementById('pAzienda').value,
+    photo: document.getElementById('pPhotoUrl').value
+  };
+  localStorage.setItem('user_profile', JSON.stringify(d));
+  loadProfile();
+}
+
+function loadProfile() {
+  const d = JSON.parse(localStorage.getItem('user_profile') || '{}');
+  if(document.getElementById('pNome')) document.getElementById('pNome').value = d.nome || '';
+  if(document.getElementById('pAzienda')) document.getElementById('pAzienda').value = d.azienda || '';
+  if(document.getElementById('pPhotoUrl')) document.getElementById('pPhotoUrl').value = d.photo || '';
+  
+  if(document.getElementById('profileNameDisplay')) document.getElementById('profileNameDisplay').textContent = d.nome || 'Il tuo Nome';
+  if(document.getElementById('profilePhoto')) {
+    if(d.photo) document.getElementById('profilePhoto').innerHTML = `<img src="${d.photo}" />`;
+    else document.getElementById('profilePhoto').innerHTML = `<span>👤</span>`;
   }
 }
 async function logout(){ await supabaseClient.auth.signOut(); window.location.reload(); }
