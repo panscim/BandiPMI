@@ -157,6 +157,32 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .btn-sub{width:100%;background:var(--p);color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px;transition:opacity .2s;}
 .btn-sub:hover{opacity:.9;}
 @media(max-width:600px){.cnt,.sr,.cg,.sbk{grid-template-columns:1fr 1fr;}.cg,.sr{grid-template-columns:1fr;}}
+
+/* PRINT STYLES */
+@media print {
+  body * { visibility: hidden; background: #fff !important; }
+  #modalsContainer, #modalsContainer * { visibility: visible; }
+  .ov.open { position: absolute; inset: 0; background: #fff; display: block !important; overflow: visible; }
+  .modal { box-shadow: none; border: none; max-width: 100%; width: 100%; margin: 0; padding: 0; position: static; max-height: none; overflow: visible; }
+  .mh { border-bottom: 2px solid #000; padding: 0 0 20px 0; }
+  .mb { padding: 20px 0; }
+  .mf, .btn-x, .modal-actions, .sim, .btn-sim, .btn-p { display: none !important; }
+  .st, .section-header, .logo { visibility: hidden !important; height: 0; margin: 0; }
+  .badge { border: 1px solid #ccc !important; color: #000 !important; background: none !important; }
+  .rc { border: 1px solid #ccc !important; color: #000 !important; background: none !important; }
+  .ccard { border: 1px solid #ccc !important; background: none !important; color: #000 !important; }
+  .cperc, .ctipo { color: #000 !important; }
+  .bx { border: 1px dashed #ccc !important; background: none !important; }
+  .bxt { color: #000 !important; }
+  .dot { color: #000 !important; }
+  a { text-decoration: none; color: #000; }
+}
+
+.modal-actions { display: flex; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0; }
+.btn-action { background: #f8fafc; border: 1.5px solid #e2e8f0; color: #475569; padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all .2s; }
+.btn-action:hover { background: #f1f5f9; border-color: #cbd5e1; color: var(--p); transform: translateY(-1px); }
+.btn-action.primary { background: #eff6ff; border-color: #bfdbfe; color: var(--p); }
+.btn-action.primary:hover { background: #dbeafe; }
 </style>
 </head>
 <body onload="checkAuth()">
@@ -272,6 +298,10 @@ async function checkAuth() {
   }
 }
 
+function stampaBando(id) {
+  window.print();
+}
+
 async function loadBandi() {
   const container = document.getElementById('bandiContainer');
   const modalContainer = document.getElementById('modalsContainer');
@@ -368,11 +398,17 @@ function createModalHTML(b) {
 
   // Prepare regional rates for the select change
   const tariffeStr = JSON.stringify(b.tariffe_regionali || {});
+  const hasDoc = b.documenti_links && b.documenti_links.length > 0;
+  const docUrl = hasDoc ? b.documenti_links[0] : '#';
 
   return `
     <div class="ov" id="${b.id}">
      <div class="modal">
       <div class="mh">
+       <div class="modal-actions">
+        <button class="btn-action primary" onclick="stampaBando('${b.id}')">🖨️ Stampa PDF Piano</button>
+        ${hasDoc ? `<button class="btn-action" onclick="window.open('${docUrl}', '_blank')">📄 Scarica Decreto Originale</button>` : ''}
+       </div>
        <div class="mt">${b.icona || '🎓'} ${b.titolo}</div>
        <div class="me">${b.riferimento || ''} · Gestore: ${b.ente || ''}</div>
        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
