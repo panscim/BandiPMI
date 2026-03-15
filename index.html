@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>BandiPMI</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--p:#1a6ef5;--pd:#0f4ec2;--g:#f4f6fa;--t:#1e1e2e;--m:#6b7280;--sh:0 4px 24px rgba(26,110,245,0.10);}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -359,23 +360,73 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
  <div class="fm">
   <div class="fmtitle">🚀 Richiedi una consulenza gratuita</div>
   <div class="fmsub" id="fSub">Ti contatteremo per valutare insieme la tua candidatura.</div>
-  <div class="fg"><label>Nome e Cognome *</label><input type="text" placeholder="es. Mario Rossi"/></div>
-  <div class="fg"><label>Ragione Sociale *</label><input type="text" placeholder="es. Rossi S.r.l."/></div>
-  <div class="fg"><label>Partita IVA *</label><input type="text" placeholder="es. 01234567890"/></div>
-  <div class="fg"><label>N. dipendenti</label><select><option>1–5</option><option>6–15</option><option>16–50</option><option>51–250</option></select></div>
-  <div class="fg"><label>Regione</label><select><option>Puglia</option><option>Campania</option><option>Sicilia</option><option>Calabria</option><option>Basilicata</option><option>Sardegna</option><option>Molise</option><option>Altra</option></select></div>
-  <div class="fg"><label>Telefono *</label><input type="tel" placeholder="+39 333 1234567"/></div>
-  <div class="fg"><label>Email *</label><input type="email" placeholder="mario@azienda.it"/></div>
-  <button class="btn-sub" onclick="inviaForm()">✅ Invia – Ti contatto entro 24h</button>
+  <div class="fg"><label>Nome e Cognome *</label><input type="text" id="fNome" placeholder="es. Mario Rossi"/></div>
+  <div class="fg"><label>Ragione Sociale *</label><input type="text" id="fRag" placeholder="es. Rossi S.r.l."/></div>
+  <div class="fg"><label>Partita IVA *</label><input type="text" id="fIva" placeholder="es. 01234567890"/></div>
+  <div class="fg"><label>N. dipendenti</label><select id="fDip"><option>1–5</option><option>6–15</option><option>16–50</option><option>51–250</option></select></div>
+  <div class="fg"><label>Regione</label><select id="fReg"><option>Puglia</option><option>Campania</option><option>Sicilia</option><option>Calabria</option><option>Basilicata</option><option>Sardegna</option><option>Molise</option><option>Altra</option></select></div>
+  <div class="fg"><label>Telefono *</label><input type="tel" id="fTel" placeholder="+39 333 1234567"/></div>
+  <div class="fg"><label>Email *</label><input type="email" id="fEmail" placeholder="mario@azienda.it"/></div>
+  <button class="btn-sub" id="btnInvia" onclick="inviaForm()">✅ Invia – Ti contatto entro 24h</button>
   <button class="btn-x" onclick="chiudi('mForm')" style="margin-top:12px;">✕ Annulla</button>
  </div>
 </div>
 
 <script>
+var supabaseUrl = 'https://kpgqagunzbgtlsxgeoub.supabase.co';
+var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwZ3FhZ3VuemJndGxzeGdlb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NjQ4ODAsImV4cCI6MjA4OTE0MDg4MH0.ee94NWJEz1xRxugiWOn1_ognhrEEDEm7_-_QxPQyB_g';
+var supabase = supabase.createClient(supabaseUrl, supabaseKey);
+var bandoSelezionato = '';
+
 function apri(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function chiudi(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
-function apriForm(nome){document.querySelectorAll('.ov.open').forEach(function(m){m.classList.remove('open');});document.getElementById('fSub').textContent='Bando: '+nome+' - Ti contatteremo entro 24 ore.';document.getElementById('mForm').classList.add('open');document.body.style.overflow='hidden';}
-function inviaForm(){alert('Richiesta inviata! Ti contatteremo entro 24 ore.');chiudi('mForm');}
+function apriForm(nome){
+  bandoSelezionato = nome;
+  document.querySelectorAll('.ov.open').forEach(function(m){m.classList.remove('open');});
+  document.getElementById('fSub').textContent='Bando: '+nome+' - Ti contatteremo entro 24 ore.';
+  document.getElementById('mForm').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+async function inviaForm(){
+  var btn = document.getElementById('btnInvia');
+  var data = {
+    bando_nome: bandoSelezionato,
+    nome_cognome: document.getElementById('fNome').value,
+    ragione_sociale: document.getElementById('fRag').value,
+    partita_iva: document.getElementById('fIva').value,
+    n_dipendenti: document.getElementById('fDip').value,
+    regione: document.getElementById('fReg').value,
+    telefono: document.getElementById('fTel').value,
+    email: document.getElementById('fEmail').value
+  };
+
+  if(!data.nome_cognome || !data.ragione_sociale || !data.partita_iva || !data.telefono || !data.email){
+    alert('Per favore, compila tutti i campi obbligatori (*)');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Invio in corso...';
+
+  try {
+    const { error } = await supabase.from('leads').insert([data]);
+    if (error) throw error;
+    alert('Richiesta inviata con successo! Ti contatteremo entro 24 ore.');
+    chiudi('mForm');
+    // Reset form
+    document.getElementById('fNome').value = '';
+    document.getElementById('fRag').value = '';
+    document.getElementById('fIva').value = '';
+    document.getElementById('fTel').value = '';
+    document.getElementById('fEmail').value = '';
+  } catch (err) {
+    console.error('Error saving lead:', err);
+    alert('Si è verificato un errore durante l\'invio. Riprova più tardi.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✅ Invia – Ti contatto entro 24h';
+  }
+}
 function setF(tag,btn){document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.querySelectorAll('.card').forEach(function(c){c.style.display=(tag==='tutti'||c.dataset.tags.indexOf(tag)>-1)?'':'none';});}
 function flt(){var q=document.getElementById('si').value.toLowerCase();document.querySelectorAll('.card').forEach(function(c){c.style.display=c.innerText.toLowerCase().indexOf(q)>-1?'':'none';});}
 document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov){ov.classList.remove('open');document.body.style.overflow='';}});});
