@@ -218,22 +218,24 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .fg input:focus,.fg select:focus{border-color:var(--p);}
 .hide-mobile { display: inline; }
 .hide-desktop { display: none; }
+.bottom-nav { display: none; }
 @media(max-width:600px){
   .cnt,.sr,.cg,.sbk{grid-template-columns:1fr 1fr;}.cg,.sr{grid-template-columns:1fr;}
+  footer { display: none; }
   .hide-mobile { display: none; }
   .hide-desktop { display: flex; }
-  .filters { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; padding: 10px 16px 20px; margin-top: -15px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .filters::-webkit-scrollbar { display: none; }
-  .fb { white-space: nowrap; flex-shrink: 0; }
-  header { padding: 40px 20px 60px; }
-  #userHeader { display: none !important; }
-  body { padding-bottom: 80px; }
   .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(0,0,0,0.06); z-index: 1000; justify-content: space-around; padding: 6px 0 calc(6px + env(safe-area-inset-bottom)); }
   .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #b0bec5; font-size: 10px; font-weight: 600; cursor: pointer; transition: color 0.2s; flex: 1; padding: 6px 0; position: relative; }
   .nav-item svg { transition: stroke 0.2s; }
   .nav-item.active { color: var(--p); }
   .nav-item.active svg { stroke: var(--p); }
   .nav-item.active::after { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: var(--p); border-radius: 0 0 3px 3px; }
+  .filters { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; padding: 10px 16px 20px; margin-top: -15px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .fb { white-space: nowrap; flex-shrink: 0; }
+  header { padding: 40px 20px 60px; }
+  #userHeader { display: none !important; }
+  body { padding-bottom: 80px; }
   .status-tag { display: none !important; }
   .ov { padding: 0 !important; }
   .ov .modal { max-width: 100%; width: 100%; height: 100%; max-height: 100vh; border-radius: 0; margin: 0; padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
