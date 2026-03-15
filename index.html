@@ -144,9 +144,12 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 
 /* SAVE BUTTON */
 .card-actions { position: absolute; top: 10px; right: 10px; z-index: 5; }
-.btn-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.95); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: 1.5px solid #eef2fb; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.btn-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.95); border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1.5px solid #eef2fb; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.btn-icon svg { stroke: #94a3b8; fill: none; transition: all 0.2s; }
 .btn-icon:hover { transform: scale(1.05); background: #fff; border-color: var(--p); }
-.btn-icon.active { color: var(--p); border-color: var(--p); background: #eff6ff; }
+.btn-icon:hover svg { stroke: var(--p); }
+.btn-icon.active { border-color: var(--p); background: #eff6ff; }
+.btn-icon.active svg { stroke: var(--p); fill: var(--p); }
 
 /* MODAL CLOSE FIX */
 .btn-x-fixed { position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(15, 23, 42, 0.8); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: 2px solid #fff; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
@@ -223,11 +226,12 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   header { padding: 40px 20px 60px; }
   #userHeader { display: none !important; }
   body { padding-bottom: 80px; }
-  .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid #eef2fb; z-index: 1000; justify-content: space-around; padding: 12px 10px calc(12px + env(safe-area-inset-bottom)); box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
-  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--m); font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; flex: 1; }
-  .nav-item i { font-style: normal; font-size: 22px; transition: transform 0.2s; }
+  .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(0,0,0,0.06); z-index: 1000; justify-content: space-around; padding: 6px 0 calc(6px + env(safe-area-inset-bottom)); }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #b0bec5; font-size: 10px; font-weight: 600; cursor: pointer; transition: color 0.2s; flex: 1; padding: 6px 0; position: relative; }
+  .nav-item svg { transition: stroke 0.2s; }
   .nav-item.active { color: var(--p); }
-  .nav-item.active i { transform: translateY(-2px); }
+  .nav-item.active svg { stroke: var(--p); }
+  .nav-item.active::after { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: var(--p); border-radius: 0 0 3px 3px; }
   .status-tag { display: none !important; }
   .ov { padding: 0 !important; }
   .ov .modal { max-width: 100%; width: 100%; height: 100%; max-height: 100vh; border-radius: 0; margin: 0; }
@@ -378,10 +382,22 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 </div>
 
 <nav class="bottom-nav">
-  <div class="nav-item active" id="nav-dashboard" onclick="navTo('dashboard')"><i>🏠</i><span>Home</span></div>
-  <div class="nav-item" id="nav-salvati" onclick="navTo('salvati')"><i>🔖</i><span>Salvati</span></div>
-  <div class="nav-item" id="nav-contatti" onclick="navTo('contatti')"><i>✉️</i><span>Contatti</span></div>
-  <div class="nav-item" id="nav-profilo" onclick="navTo('profilo')"><i>👤</i><span>Profilo</span></div>
+  <div class="nav-item active" id="nav-dashboard" onclick="navTo('dashboard')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b0bec5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span>
+  </div>
+  <div class="nav-item" id="nav-salvati" onclick="navTo('salvati')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b0bec5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    <span>Salvati</span>
+  </div>
+  <div class="nav-item" id="nav-contatti" onclick="navTo('contatti')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b0bec5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    <span>Contatti</span>
+  </div>
+  <div class="nav-item" id="nav-profilo" onclick="navTo('profilo')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b0bec5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Profilo</span>
+  </div>
 </nav>
 
 <footer>
@@ -550,7 +566,7 @@ function createCardHTML(b, status) {
   return `
     <div class="card ${status}" data-tags="${tagsStr}" onclick="${status === 'closed' ? '' : `apri('${b.id}')`}">
       <div class="card-actions" onclick="event.stopPropagation()">
-        <div class="btn-icon ${saved ? 'active' : ''}" onclick="toggleSave('${b.id}', this)">${saved ? '🔖' : '🔖'}</div>
+        <div class="btn-icon ${saved ? 'active' : ''}" onclick="toggleSave('${b.id}', this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
       </div>
       ${statusBadge}
       <div class="ch">
