@@ -196,8 +196,17 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .fg input,.fg select{width:100%;padding:12px 16px;border:2px solid #e5e7eb;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s;}
 .fg input:focus,.fg select:focus{border-color:var(--p);}
 .btn-sub{width:100%;background:var(--p);color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px;transition:opacity .2s;}
-.btn-sub:hover{opacity:.9;}
-@media(max-width:600px){.cnt,.sr,.cg,.sbk{grid-template-columns:1fr 1fr;}.cg,.sr{grid-template-columns:1fr;}}
+.fg input:focus,.fg select:focus{border-color:var(--p);}
+.hide-mobile { display: inline; }
+@media(max-width:600px){
+  .cnt,.sr,.cg,.sbk{grid-template-columns:1fr 1fr;}.cg,.sr{grid-template-columns:1fr;}
+  .hide-mobile { display: none; }
+  .filters { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; padding: 10px 16px 20px; margin-top: -15px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .fb { white-space: nowrap; flex-shrink: 0; }
+  header { padding: 40px 20px 60px; }
+  #userHeader { top: 8px !important; right: 8px !important; }
+}
 
 /* PRINT STYLES */
 @media print {
@@ -629,7 +638,7 @@ function setF(t,b){document.querySelectorAll('.fb').forEach(x=>x.classList.remov
 function flt(){var q=document.getElementById('si').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>c.style.display=c.innerText.toLowerCase().indexOf(q)>-1?'':'none');}
 supabaseClient.auth.onAuthStateChange((ev, ses) => {
   const h = document.getElementById('userHeader');
-  if (ses) h.innerHTML = `<button onclick="logout()" class="btn-d">Esci (${ses.user.email})</button>`;
+  if (ses) h.innerHTML = `<button onclick="logout()" class="btn-d">Esci <span class="hide-mobile">(${ses.user.email})</span></button>`;
   else h.innerHTML = `<a href="login.html" class="btn-d">Accedi</a>`;
 });
 async function logout(){ await supabaseClient.auth.signOut(); window.location.reload(); }
