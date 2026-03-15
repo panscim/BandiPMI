@@ -158,6 +158,21 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .sr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .sg label{display:block;font-size:12px;font-weight:700;opacity:.85;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
 .sg select,.sg input{width:100%;padding:11px 14px;border-radius:12px;border:none;font-size:14px;color:var(--t);outline:none;}
+
+/* FAQ ACCORDION PREMIUM */
+.faq-container { margin: 60px 0 40px; padding: 40px; background: #fff; border-radius: 24px; border: 1.5px solid #eef2fb; }
+.faq-title { font-size: 24px; font-weight: 800; color: var(--t); margin-bottom: 24px; text-align: center; }
+.faq-item { background: #fff; border: 1px solid #eef2fb; border-radius: 16px; margin-bottom: 12px; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.faq-item.open { border-color: var(--p); box-shadow: 0 10px 30px rgba(26,110,245,0.08); }
+.faq-question { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+.faq-question h4 { font-size: 15px; font-weight: 700; color: var(--t); margin: 0; }
+.faq-icon { font-size: 18px; transition: transform 0.3s; color: var(--p); font-weight: 800; }
+.faq-item.open .faq-icon { transform: rotate(180deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: all 0.3s ease; background: #fcfdfe; }
+.faq-item.open .faq-answer { max-height: 500px; padding: 0 24px 20px; }
+.faq-answer p { font-size: 14px; line-height: 1.6; color: #475569; margin: 0; padding-top: 15px; border-top: 1px solid #f1f5f9; }
+.ms.faq-section { margin-top: 32px; padding-top: 24px; border-top: 1.5px dashed #eef2fb; }
+
 .btn-sim{width:100%;background:#fff;color:var(--p);border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px;}
 .sres{display:none;margin-top:20px;background:#fff;border-radius:24px;padding:32px;color:var(--t);border:1px solid #eef2fb;}
 .sres.show{display:block;}
@@ -370,7 +385,39 @@ async function loadBandi() {
   container.innerHTML = 
     renderSection(groups.upcoming, 'upcoming') +
     renderSection(groups.active, 'active') +
-    renderSection(groups.closed, 'closed');
+    renderSection(groups.closed, 'closed') +
+    `
+    <div class="faq-container">
+      <h2 class="faq-title">Domande Frequenti</h2>
+      ${renderFaqList(globalFaqs)}
+    </div>
+    `;
+}
+
+const globalFaqs = [
+  { question: "Come funziona BandiPMI?", answer: "La nostra piattaforma aggrega e semplifica le informazioni sui bandi e incentivi per le imprese. Ti aiutiamo a capire se hai i requisiti e qual è l'agevolazione massima che puoi ottenere." },
+  { question: "Quali regioni sono coperte?", answer: "Copriamo bandi nazionali e regionali, con un focus particolare sulle regioni del Mezzogiorno (Puglia, Basilicata, Calabria, etc.), ma monitoriamo opportunità per tutta Italia." },
+  { question: "Come posso presentare la domanda?", answer: "Per ogni bando forniamo il link ufficiale al decreto e alla scheda dell'ente gestore. Puoi anche richiedere supporto cliccando su 'Partecipa' per essere ricontattato dai nostri consulenti." }
+];
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+
+function renderFaqList(faqs) {
+  if (!faqs || faqs.length === 0) return '';
+  return faqs.map(f => `
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>${f.question}</h4>
+        <span class="faq-icon">▾</span>
+      </div>
+      <div class="faq-answer">
+        <p>${f.answer}</p>
+      </div>
+    </div>
+  `).join('');
 }
 
 function createCardHTML(b, status) {
@@ -466,6 +513,11 @@ function createModalHTML(b) {
         ${b.quanto_banner_testo ? `<div class="bx"><div class="bxi">🏆</div><div class="bxt"><div class="bxtt">${b.quanto_banner_testo}</div></div></div>` : ''}
        </div>
 
+        ${b.faqs && b.faqs.length > 0 ? `
+        <div class="ms faq-section">
+          <h3>🤔 Domande Frequenti sul Bando</h3>
+          ${renderFaqList(b.faqs)}
+        </div>` : ''}
        <div class="ms"><h3>📚 Cosa paga?</h3><ul class="pl2">${cosPaga}${cosNonPaga}</ul></div>
 
        <div class="ms">
