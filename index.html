@@ -417,7 +417,14 @@ function createCardHTML(b, status) {
 
 function createModalHTML(b) {
   const chiPuo = (b.chi_puo_accedere || []).map(p => `<li><span class="dot">→</span>${p}</li>`).join('');
-  const regioni = (b.regioni_ammesse || []).map(r => `<div class="rc">${r}</div>`).join('');
+  
+  // Smart Region Logic: if "Tutta Italia", don't list all regions
+  let regioniArr = b.regioni_ammesse || [];
+  if (b.area_geografica === 'Tutta Italia') {
+    regioniArr = ['Tutta Italia'];
+  }
+  const regioni = regioniArr.map(r => `<div class="rc">${r}</div>`).join('');
+  
   const cosPaga = (b.cosa_paga || []).map(p => `<li><span class="dot">✔</span>${p}</li>`).join('');
   const cosNonPaga = (b.cosa_non_paga || []).map(p => `<li><span class="dot">✗</span><span style="color:#6b7280; text-decoration:line-through;">NON paga: ${p}</span></li>`).join('');
 
