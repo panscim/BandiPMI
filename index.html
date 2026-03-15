@@ -69,10 +69,30 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .btn-d:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,110,245,.3);}
 .btn-d.closed{background:#94a3b8;cursor:not-allowed;opacity:0.8;}
 .btn-d.closed:hover{transform:none;box-shadow:none;}
-.card.closed{border-color:#f1f5f9;opacity:0.8;cursor:default;}
-.card.closed .ch .ct{color:var(--m);}
-.card.closed .badge{background:#f1f5f9;color:var(--m);border-color:#e5e7eb;}
-.status-tag{position:absolute;top:12px;right:12px;background:#ef4444;color:#fff;font-size:10px;font-weight:900;padding:3px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:1px;z-index:2;}
+
+/* Status Styles */
+.card.upcoming { border-color: #fde68a; background: linear-gradient(to bottom, #fff, #fffbeb); }
+.card.upcoming:hover { border-color: #fbbf24; box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1); }
+.card.upcoming .ci { background: #fef3c7 !important; color: #d97706; }
+.card.upcoming .ct { color: #92400e; }
+
+.card.closed { border-color: #e5e7eb; opacity: 0.75; cursor: default; filter: grayscale(0.4); }
+.card.closed:hover { transform: none; box-shadow: var(--sh); border-color: #e5e7eb; }
+.card.closed .ch .ct { color: #6b7280; }
+.card.closed .badge { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; }
+.card.closed .ci { background: #f3f4f6 !important; filter: grayscale(1); }
+
+.status-tag { position: absolute; top: 12px; right: 12px; font-size: 10px; font-weight: 900; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.status-tag.closed { background: #4b5563; color: #fff; }
+.status-tag.upcoming { background: #d97706; color: #fff; }
+.status-tag.active { background: #16a34a; color: #fff; }
+
+.section-header { display: flex; align-items: center; gap: 10px; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 2px solid #eef2fb; }
+.section-header h2 { font-size: 18px; font-weight: 800; color: var(--t); }
+.section-header .dot { width: 10px; height: 10px; border-radius: 50%; }
+.section-header.active .dot { background: #16a34a; box-shadow: 0 0 10px #16a34a; }
+.section-header.upcoming .dot { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
+.section-header.closed .dot { background: #6b7280; }
 
 /* MODAL DESIGN PREMIUM */
 .ov{display:none;position:fixed;inset:0;background:rgba(10,20,50,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;}
@@ -279,17 +299,23 @@ async function loadBandi() {
 
   const renderSection = (title, list, status) => {
     if (list.length === 0) return '';
+    const statusLabel = status === 'active' ? 'Bandi Attivi' : status === 'upcoming' ? 'In Prossima Apertura' : 'Bandi Chiusi (Sold Out)';
+    const icon = status === 'active' ? '🟢' : status === 'upcoming' ? '⏳' : '🚫';
+    
     return `
       <div class="status-section">
-        <div class="st" style="margin-top:40px;">${title}</div>
+        <div class="section-header ${status}">
+          <div class="dot"></div>
+          <h2>${icon} ${statusLabel}</h2>
+        </div>
         <div>${list.map(b => createCardHTML(b, status)).join('')}</div>
       </div>`;
   };
 
   container.innerHTML = 
-    renderSection('🟢 Bandi Attivi', groups.active, 'active') +
-    renderSection('⏳ In Prossima Apertura', groups.upcoming, 'upcoming') +
-    renderSection('🚫 Bandi Chiusi (Sold Out)', groups.closed, 'closed');
+    renderSection('Attivi', groups.active, 'active') +
+    renderSection('In Arrivo', groups.upcoming, 'upcoming') +
+    renderSection('Chiusi', groups.closed, 'closed');
 }
 
 function createCardHTML(b, status) {
@@ -297,19 +323,21 @@ function createCardHTML(b, status) {
   const pills = (b.requisiti_pillole || []).map(p => `<div class="pill">${p}</div>`).join('');
   
   let statusBadge = '';
-  if (status === 'closed') statusBadge = '<span class="status-tag">SOLD OUT</span>';
+  if (status === 'closed') statusBadge = '<span class="status-tag closed">SOLD OUT</span>';
+  else if (status === 'upcoming') statusBadge = '<span class="status-tag upcoming">IN ARRIVO</span>';
+  else statusBadge = '<span class="status-tag active">ATTIVO</span>';
   
   let timeBadge = '';
   if (status === 'closed') {
-    timeBadge = '<span class="badge br">🔴 CHIUSO</span>';
+    timeBadge = '<span class="badge br">🔴 CHIUSO IL ' + (b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : '---') + '</span>';
   } else if (status === 'upcoming') {
-    timeBadge = `<span class="badge bo">⏳ Prossima Apertura: ${new Date(b.data_apertura).toLocaleDateString('it-IT')}</span>`;
+    timeBadge = `<span class="badge bo" style="background:#fef3c7; border-color:#fcd34d; color:#92400e;">⏳ Apertura: ${new Date(b.data_apertura).toLocaleDateString('it-IT')}</span>`;
   } else {
-    timeBadge = `<span class="badge bg">✅ Domande ${formatDateRange(b.data_apertura, b.scadenza)}</span>`;
+    timeBadge = `<span class="badge bg">✅ Scade il: ${b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : 'Open'}</span>`;
   }
   
   return `
-    <div class="card ${status === 'closed' ? 'closed' : ''}" data-tags="${tagsStr}" onclick="${status === 'closed' ? '' : `apri('${b.id}')`}">
+    <div class="card ${status}" data-tags="${tagsStr}" onclick="${status === 'closed' ? '' : `apri('${b.id}')`}">
       ${statusBadge}
       <div class="ch">
         <div class="ci" style="background:${b.colore_icona || '#f3f4f6'}">${b.icona || '🚀'}</div>
@@ -326,8 +354,8 @@ function createCardHTML(b, status) {
       <div class="pl">✔ RIENTRI SE...</div>
       <div class="pills">${pills}</div>
       <div class="db">
-        <div class="dt">Sportello: <strong>${status === 'closed' ? 'TERMINATO' : (b.data_apertura ? new Date(b.data_apertura).toLocaleDateString('it-IT') + ' – ' + (b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : '--') : '--')}</strong></div>
-        <button class="btn-d ${status === 'closed' ? 'closed' : ''}" style="background:${status === 'closed' ? '#94a3b8' : '#1a6ef5'}; padding: 10px 24px; border-radius:100px;">${status === 'closed' ? 'Chiuso' : 'Scopri di più →'}</button>
+        <div class="dt">${status === 'upcoming' ? 'Apre il:' : 'Scadenza:'} <strong>${status === 'closed' ? 'TERMINATO' : (status === 'upcoming' ? new Date(b.data_apertura).toLocaleDateString('it-IT') : (b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : 'Sempre attivo'))}</strong></div>
+        <button class="btn-d ${status === 'closed' ? 'closed' : ''}" style="background:${status === 'closed' ? '#94a3b8' : (status === 'upcoming' ? '#d97706' : '#1a6ef5')}; padding: 10px 24px; border-radius:100px;">${status === 'closed' ? 'Sold Out' : (status === 'upcoming' ? 'Scopri in anteprima →' : 'Scopri di più →')}</button>
       </div>
     </div>`;
 }
