@@ -205,7 +205,13 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   .filters::-webkit-scrollbar { display: none; }
   .fb { white-space: nowrap; flex-shrink: 0; }
   header { padding: 40px 20px 60px; }
-  #userHeader { top: 8px !important; right: 8px !important; }
+  #userHeader { display: none !important; }
+  body { padding-bottom: 80px; }
+  .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid #eef2fb; z-index: 1000; justify-content: space-around; padding: 12px 10px calc(12px + env(safe-area-inset-bottom)); box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--m); font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; flex: 1; }
+  .nav-item i { font-style: normal; font-size: 22px; transition: transform 0.2s; }
+  .nav-item.active { color: var(--p); }
+  .nav-item.active i { transform: translateY(-2px); }
 }
 
 /* PRINT STYLES */
@@ -298,6 +304,22 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   <button class="btn-x" onclick="chiudi('mForm')" style="margin-top:12px;">✕ Annulla</button>
  </div>
 </div>
+
+<!-- PROFILO MODAL -->
+<div class="ov" id="mProfilo">
+ <div class="fm">
+  <div class="fmtitle">👤 Il mio Profilo</div>
+  <div class="fmsub" id="userEmailLabel">Accesso effettuato come...</div>
+  <button class="btn-sub" onclick="logout()" style="background:#ef4444;">🚪 Esci dall'account</button>
+  <button class="btn-x" onclick="chiudi('mProfilo')" style="margin-top:12px;">✕ Chiudi</button>
+ </div>
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-item active" id="nav-dashboard" onclick="navTo('dashboard')"><i>🏠</i><span>Home</span></div>
+  <div class="nav-item" id="nav-cerca" onclick="navTo('cerca')"><i>🔍</i><span>Cerca</span></div>
+  <div class="nav-item" id="nav-profilo" onclick="navTo('profilo')"><i>👤</i><span>Profilo</span></div>
+</nav>
 
 <footer>
   <div class="f-cnt">
@@ -638,9 +660,30 @@ function setF(t,b){document.querySelectorAll('.fb').forEach(x=>x.classList.remov
 function flt(){var q=document.getElementById('si').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>c.style.display=c.innerText.toLowerCase().indexOf(q)>-1?'':'none');}
 supabaseClient.auth.onAuthStateChange((ev, ses) => {
   const h = document.getElementById('userHeader');
-  if (ses) h.innerHTML = `<button onclick="logout()" class="btn-d">Esci <span class="hide-mobile">(${ses.user.email})</span></button>`;
-  else h.innerHTML = `<a href="login.html" class="btn-d">Accedi</a>`;
+  const u = document.getElementById('userEmailLabel');
+  if (ses) {
+    const btn = `<button onclick="logout()" class="btn-d">Esci <span class="hide-mobile">(${ses.user.email})</span></button>`;
+    h.innerHTML = btn;
+    if(u) u.textContent = ses.user.email;
+  } else {
+    h.innerHTML = `<a href="login.html" class="btn-d">Accedi</a>`;
+    if(u) u.textContent = 'Nessun account collegato';
+  }
 });
+
+function navTo(t) {
+  document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
+  document.getElementById('nav-' + t).classList.add('active');
+  if (t === 'dashboard') { window.scrollTo({top: 0, behavior: 'smooth'}); }
+  if (t === 'cerca') { document.getElementById('si').focus(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+  if (t === 'profilo') { 
+    const ses = supabaseClient.auth.getSession();
+    ses.then(({data}) => {
+      if(!data.session) window.location.href = 'login.html';
+      else apri('mProfilo');
+    });
+  }
+}
 async function logout(){ await supabaseClient.auth.signOut(); window.location.reload(); }
 function acceptCookies(t){ localStorage.setItem('cookieConsent',t); document.getElementById('cookieBanner').style.display='none'; }
 if(!localStorage.getItem('cookieConsent')) document.getElementById('cookieBanner').style.display='flex';
