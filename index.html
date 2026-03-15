@@ -66,6 +66,13 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .dt strong{color:var(--t);}
 .btn-d{background:var(--p);color:#fff;border:none;border-radius:50px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;}
 .btn-d:hover{background:var(--pd);}
+.btn-d.closed{background:#ef4444;cursor:not-allowed;opacity:0.8;}
+.btn-d.closed:hover{background:#ef4444;}
+.card.closed{border-color:#fee2e2;opacity:0.85;cursor:default;}
+.card.closed:hover{transform:none;box-shadow:var(--sh);}
+.card.closed .ch .ct{color:var(--m);}
+.card.closed .badge.bg{background:#f3f4f6;color:var(--m);}
+.status-tag{position:absolute;top:10px;right:10px;background:#ef4444;color:#fff;font-size:11px;font-weight:900;padding:2px 8px;border-radius:4px;text-transform:uppercase;}
 /* MODAL */
 .ov{display:none;position:fixed;inset:0;background:rgba(10,20,50,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;}
 .ov.open{display:flex;}
@@ -177,220 +184,13 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   </div>
   <div class="st">📋 Bandi disponibili per la tua PMI</div>
 
-  <div class="card" data-tags="formazione competenze sud">
-    <div class="ch"><div class="ci" style="background:#dbeafe">🎓</div><div><div class="ct">Sviluppo Competenze Specialistiche PMI</div><div class="ce">MIMIT + Invitalia · DM 4/9/2025</div></div></div>
-    <div class="cm"><span class="badge bg">✅ 21 apr → 23 giu 2026</span><span class="badge bb">💶 Fino €60.000</span><span class="badge bo">📍 Sud Italia – Puglia inclusa</span></div>
-    <div class="pl">✔ Rientri se…</div>
-    <div class="pills"><div class="pill">👥 PMI fino 250 dip.</div><div class="pill">📍 Unità in Puglia o altro Sud</div><div class="pill">📚 Formi su digitale/green</div><div class="pill">💶 Budget 10k–60k</div></div>
-    <div class="db"><span class="dt">Sportello: <strong>21/04 – 23/06/2026</strong></span><button class="btn-d" onclick="apri('m1')">Scopri di più →</button></div>
-  </div>
-
-  <div class="card" data-tags="investimenti digitale" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
-    <div class="ch"><div class="ci" style="background:#fef9c3">🏭</div><div><div class="ct">Nuova Sabatini – Beni Strumentali</div><div class="ce">MIMIT + MedioCredito Centrale</div></div></div>
-    <div class="cm"><span class="badge bg">✅ Attivo</span><span class="badge bb">💶 Contributo su interessi</span><span class="badge bp">💻 Beni 4.0</span></div>
-    <div class="pl">✔ Rientri se…</div>
-    <div class="pills"><div class="pill">👥 PMI qualsiasi settore</div><div class="pill">🏭 Compri macchinari</div><div class="pill">💻 Software e beni 4.0</div></div>
-    <div class="db"><span class="dt">Scadenza: <strong>Fondi disponibili</strong></span><button class="btn-d">Scopri di più →</button></div>
-  </div>
-
-  <div class="card" data-tags="digitale verde investimenti" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
-    <div class="ch"><div class="ci" style="background:#dcfce7">⚡</div><div><div class="ct">Transizione 5.0 – Green & Digital</div><div class="ce">MIMIT – PNRR</div></div></div>
-    <div class="cm"><span class="badge bg">✅ Attivo</span><span class="badge bb">💶 Credito d'imposta 45%</span><span class="badge bp">🌿 Green</span></div>
-    <div class="pl">✔ Rientri se…</div>
-    <div class="pills"><div class="pill">⚡ Investi green + digitale</div><div class="pill">🏢 Qualsiasi dimensione</div></div>
-    <div class="db"><span class="dt">Scadenza: <strong>31/12/2025</strong></span><button class="btn-d">Scopri di più →</button></div>
-  </div>
-
-  <div class="card" data-tags="investimenti sud" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
-    <div class="ch"><div class="ci" style="background:#ede9fe">🌊</div><div><div class="ct">Contratti di Sviluppo – Sud Italia</div><div class="ce">MIMIT + Invitalia</div></div></div>
-    <div class="cm"><span class="badge bg">✅ Aperto</span><span class="badge bb">💶 Fino 75% fondo perduto</span><span class="badge br">🌊 Solo Sud</span></div>
-    <div class="pl">✔ Rientri se…</div>
-    <div class="pills"><div class="pill">🌊 Progetto nel Mezzogiorno</div><div class="pill">💼 Grande investimento</div><div class="pill">🏭 Industria/Turismo/Agro</div></div>
-    <div class="db"><span class="dt">Scadenza: <strong>Sportello aperto</strong></span><button class="btn-d">Scopri di più →</button></div>
-  </div>
-
-  <div class="card" data-tags="formazione digitale" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
-    <div class="ch"><div class="ci" style="background:#fce7f3">🚀</div><div><div class="ct">Voucher Innovation Manager</div><div class="ce">MIMIT – Manager innovazione PMI</div></div></div>
-    <div class="cm"><span class="badge bo">⚠️ Prossima apertura</span><span class="badge bb">💶 Fino €80.000</span><span class="badge bp">🧠 Solo PMI</span></div>
-    <div class="pl">✔ Rientri se…</div>
-    <div class="pills"><div class="pill">👥 PMI fino 250 dip.</div><div class="pill">🧠 Vuoi un manager innovazione</div></div>
-    <div class="db"><span class="dt">Scadenza: <strong>In arrivo 2026</strong></span><button class="btn-d">Scopri di più →</button></div>
+  <div id="bandiContainer">
+    <div style="text-align:center; padding:40px; color:var(--m);">⏳ Caricamento bandi...</div>
   </div>
 </main>
 
-<!-- MODAL 1 -->
-<div class="ov" id="m1">
- <div class="modal">
-  <div class="mh">
-   <div class="mt">🎓 Sviluppo Competenze Specialistiche PMI</div>
-   <div class="me">DM 4/9/2025 · DD 26/1/2026 · DD 10/2/2026 · Gestore: Invitalia</div>
-   <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-    <span class="badge bg">✅ 21 apr → 23 giu 2026</span>
-    <span class="badge bb">💶 Progetti 10k–60k</span>
-    <span class="badge bo">🏃 Graduatoria</span>
-   </div>
-  </div>
-  <div class="mb">
-   <div class="ms">
-    <h3>🎯 Cos'è – In parole semplici</h3>
-    <p style="font-size:14.5px;line-height:1.6;color:#374151;">Lo Stato paga fino al 70% dei <strong>corsi di formazione</strong> per i tuoi dipendenti su digitale, innovazione e green. Tu organizzi i corsi con un'agenzia esterna e ricevi il rimborso a <strong>fondo perduto</strong>: soldi che non devi restituire.</p>
-   </div>
-   <div class="ms">
-    <h3>✅ Chi può accedere?</h3>
-    <ul class="pl2">
-     <li><span class="dot">→</span><strong>Solo PMI:</strong> micro, piccole o medie imprese (fino 250 dipendenti, fatturato ≤50M€)</li>
-     <li><span class="dot">→</span>Regolarmente iscritta al Registro Imprese, non in liquidazione</li>
-     <li><span class="dot">→</span><strong>Devi avere almeno un punto operativo</strong> in una di queste regioni:</li>
-    </ul>
-    <div class="rg">
-     <div class="rc hl2">🌿 Puglia</div>
-     <div class="rc">Campania</div>
-     <div class="rc">Sicilia</div>
-     <div class="rc">Calabria</div>
-     <div class="rc">Basilicata</div>
-     <div class="rc">Sardegna</div>
-     <div class="rc">Molise</div>
-    </div>
-    <p style="font-size:12.5px;color:var(--m);margin-top:8px;">💡 La sede legale può essere al Nord: conta dove hai dipendenti o filiali.</p>
-   </div>
-   <div class="ms">
-    <h3>💶 Quanto puoi ricevere?</h3>
-    <div class="cg">
-     <div class="ccard sm"><div class="cperc">50%</div><div class="ctipo">Base per tutti</div><div class="cdesc">Ogni PMI parte dal 50% di rimborso sulle spese di formazione</div></div>
-     <div class="ccard md"><div class="cperc">+20%</div><div class="ctipo">Bonus extra</div><div class="cdesc">Se coinvolgi PMI di almeno 2 regioni diverse del Sud</div></div>
-    </div>
-    <div class="bx">
-     <div class="bxi">🏆</div>
-     <div class="bxt"><div class="bxtt">Massimo: 70% micro/piccole · 60% medie</div><div class="bxs">Budget totale: <strong>50 milioni €</strong>. Il 40% è riservato ad automotive e moda/tessile/arredamento.</div></div>
-    </div>
-   </div>
-   <div class="ms">
-    <h3>📚 Cosa paga il bando?</h3>
-    <ul class="pl2">
-     <li><span class="dot">✔</span>Corsi su: digitale, green, AI, IoT, sostenibilità</li>
-     <li><span class="dot">✔</span>Compensi formatori e agenzie formative</li>
-     <li><span class="dot">✔</span>Materiali didattici e attrezzature usate per la formazione</li>
-     <li><span class="dot">✔</span>Ore dei tuoi dipendenti in aula (calcolate a tariffa oraria)</li>
-     <li><span class="dot">✗</span>NON paga: stipendi ordinari, macchinari, marketing</li>
-    </ul>
-   </div>
-   <div class="ms">
-    <h3>🧮 Simula il tuo contributo</h3>
-    <div class="sim">
-     <h3>Quanti soldi puoi ricevere?</h3>
-     <p>La formula ufficiale del bando: <strong>N. dipendenti × Ore di formazione × Tariffa oraria regionale</strong></p>
-     <div class="sr">
-      <div class="sg"><label>Dimensione azienda</label>
-       <select id="sDim"><option value="micro">Micro (1–9 dip.)</option><option value="piccola" selected>Piccola (10–49 dip.)</option><option value="media">Media (50–249 dip.)</option></select>
-      </div>
-      <div class="sg"><label>Regione unità operativa</label>
-       <select id="sReg">
-        <option value="puglia">Puglia</option>
-        <option value="campania">Campania</option>
-        <option value="sicilia">Sicilia</option>
-        <option value="calabria">Calabria</option>
-        <option value="basilicata">Basilicata</option>
-        <option value="sardegna">Sardegna</option>
-        <option value="molise">Molise</option>
-        <option value="nord">Nord / Centro ❌</option>
-       </select>
-      </div>
-     </div>
-     <div class="sr">
-      <div class="sg"><label>N. dipendenti coinvolti</label>
-       <input type="number" id="sDip" value="5" min="1" max="250" placeholder="es. 5"/>
-      </div>
-      <div class="sg"><label>Ore di formazione previste</label>
-       <input type="number" id="sOre" value="40" min="1" placeholder="es. 40"/>
-      </div>
-     </div>
-     <div class="sr">
-      <div class="sg"><label>Progetto sovraregionale?</label>
-       <select id="sSov"><option value="no">No – solo la mia azienda</option><option value="si">Sì – con PMI di altre regioni Sud</option></select>
-      </div>
-      <div class="sg"><label>Tariffa oraria stimata (€/ora/persona)</label>
-       <input type="number" id="sTar" value="45.03" min="1" placeholder="es. 30" readonly style="background:#e8f4e8;font-weight:700;color:#15803d;"/>
-      </div>
-     </div>
-     <button class="btn-sim" onclick="simula()">⚡ Calcola il mio contributo</button>
-     <div class="sres" id="sRes">
-      <div class="srt">📊 Stima del tuo rimborso</div>
-      <div class="sam" id="sAmt">€ 0</div>
-      <div class="saml" id="sAml">a fondo perduto stimato</div>
-      <div class="sbk">
-       <div class="si"><div class="sv" id="sPerc">0%</div><div class="sl">% contributo</div></div>
-       <div class="si"><div class="sv" id="sSpesa">€0</div><div class="sl">Costo ammissibile</div></div>
-       <div class="si"><div class="sv" id="sTasca">€0</div><div class="sl">Rimane a tuo carico</div></div>
-      </div>
-      <div class="sn" id="sNote"></div>
-     </div>
-    </div>
-   </div>
-  </div>
-  <div class="mf">
-   <button class="btn-p" onclick="apriForm('Sviluppo Competenze Specialistiche PMI')">🚀 Voglio Partecipare – Contattami</button>
-   <button class="btn-x" onclick="chiudi('m1')">✕ Chiudi</button>
-  </div>
- </div>
-</div>
+<div id="modalsContainer"></div>
 
-<!-- MODAL 2 -->
-<div class="ov" id="m2">
- <div class="modal">
-  <div class="mh"><div class="mt">🏭 Nuova Sabatini – Beni Strumentali</div><div class="me">MIMIT + MedioCredito Centrale · L.232/2016</div></div>
-  <div class="mb">
-   <div class="hb"><div class="ha">Risparmio interessi</div><div class="hl">Lo Stato copre parte degli interessi del tuo finanziamento per macchinari</div></div>
-   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Compri macchinari o software con un prestito bancario e lo Stato ti rimborsa una quota degli interessi. Per beni 4.0 il contributo è più alto.</p></div>
-   <div class="ms"><h3>✅ Chi può?</h3><ul class="pl2"><li><span class="dot">→</span>PMI qualsiasi settore, sede in Italia · Anche start-up</li></ul></div>
-   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span>Finanziamento da <strong>€20.000 a €4 milioni</strong></li><li><span class="dot">→</span>Contributo maggiorato per beni <strong>4.0 e green</strong></li></ul></div>
-  </div>
-  <div class="mf"><button class="btn-p" onclick="apriForm('Nuova Sabatini')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m2')">✕ Chiudi</button></div>
- </div>
-</div>
-
-<!-- MODAL 3 -->
-<div class="ov" id="m3">
- <div class="modal">
-  <div class="mh"><div class="mt">⚡ Transizione 5.0 – Green & Digital</div><div class="me">MIMIT · PNRR Missione 7</div></div>
-  <div class="mb">
-   <div class="hb"><div class="ha">Fino al 45%</div><div class="hl">Credito d'imposta su investimenti green + digitali</div></div>
-   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Investi in macchinari 4.0 che riducono i consumi energetici e lo Stato ti fa pagare meno tasse. Più risparmi energia, più alto è il bonus.</p></div>
-   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span><strong>35–45%</strong> per investimenti fino €2,5M</li><li><span class="dot">→</span><strong>15–25%</strong> tra €2,5M e €10M</li></ul></div>
-  </div>
-  <div class="mf"><button class="btn-p" onclick="apriForm('Transizione 5.0')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m3')">✕ Chiudi</button></div>
- </div>
-</div>
-
-<!-- MODAL 4 -->
-<div class="ov" id="m4">
- <div class="modal">
-  <div class="mh"><div class="mt">🌊 Contratti di Sviluppo – Sud Italia</div><div class="me">MIMIT + Invitalia · Mezzogiorno</div></div>
-  <div class="mb">
-   <div class="hb"><div class="ha">Fino al 75%</div><div class="hl">A fondo perduto per grandi investimenti nel Mezzogiorno · Puglia ✅</div></div>
-   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Vuoi aprire o ampliare qualcosa di importante in Puglia? Invitalia ti copre fino al 75% se crei nuovi posti di lavoro stabili.</p></div>
-   <div class="ms"><h3>✅ Chi può?</h3><ul class="pl2"><li><span class="dot">→</span>Qualsiasi impresa · Investimento min. <strong>€20M</strong> nel Mezzogiorno · Nuova occupazione</li></ul></div>
-   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span>Piccole <strong>75%</strong> · Medie <strong>65%</strong> · Grandi <strong>50%</strong></li></ul></div>
-  </div>
-  <div class="mf"><button class="btn-p" onclick="apriForm('Contratti di Sviluppo Sud')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m4')">✕ Chiudi</button></div>
- </div>
-</div>
-
-<!-- MODAL 5 -->
-<div class="ov" id="m5">
- <div class="modal">
-  <div class="mh"><div class="mt">🚀 Voucher Innovation Manager</div><div class="me">MIMIT · Manager per l'innovazione PMI</div></div>
-  <div class="mb">
-   <div class="hb"><div class="ha">Fino a €80.000</div><div class="hl">Per pagare un manager esperto in innovazione e digitalizzazione</div></div>
-   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Lo Stato paga fino a €80.000 per farti avere un manager specializzato in 4.0 o green. Perfetto se vuoi innovare ma non hai competenze interne.</p></div>
-   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span>Piccole: <strong>70%</strong> max €80.000 · Medie: <strong>50%</strong> max €60.000</li></ul></div>
-  </div>
-  <div class="mf"><button class="btn-p" onclick="apriForm('Voucher Innovation Manager')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m5')">✕ Chiudi</button></div>
- </div>
-</div>
 
 <!-- FORM MODAL -->
 <div class="ov" id="mForm">
@@ -464,7 +264,122 @@ async function checkAuth() {
   } else {
     document.getElementById('authMask').style.display = 'none';
     document.body.classList.add('ready');
+    loadBandi();
   }
+}
+
+async function loadBandi() {
+  const container = document.getElementById('bandiContainer');
+  const modalContainer = document.getElementById('modalsContainer');
+  
+  try {
+    const { data: bandi, error } = await supabase
+      .from('bandi')
+      .select('*')
+      .order('scadenza', { ascending: true });
+
+    if (error) throw error;
+
+    if (!bandi || bandi.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--m);">Nessun bando disponibile al momento.</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    modalContainer.innerHTML = '';
+
+    bandi.forEach(b => {
+      const isClosed = b.scadenza && new Date(b.scadenza) < new Date();
+      container.innerHTML += createCardHTML(b, isClosed);
+      modalContainer.innerHTML += createModalHTML(b);
+    });
+
+  } catch (err) {
+    console.error('Error loading bandi:', err);
+    container.innerHTML = '<div style="text-align:center; padding:40px; color:#dc2626;">Errore nel caricamento dei bandi. Riprova più tardi.</div>';
+  }
+}
+
+function createCardHTML(b, isClosed) {
+  const tagsStr = (b.tags || []).join(' ');
+  const badges = `
+    <span class="badge ${isClosed ? '' : 'bg'}">${isClosed ? '🔴 CHIUSO' : '✅ ' + formatDateRange(b.data_apertura, b.scadenza)}</span>
+    <span class="badge bb">${b.budget_max || ''}</span>
+    <span class="badge bo">${b.area_geografica || ''}</span>
+  `;
+  
+  const pills = (b.requisiti_pillole || []).map(p => `<div class="pill">${p}</div>`).join('');
+  
+  return `
+    <div class="card ${isClosed ? 'closed' : ''}" data-tags="${tagsStr}" ${isClosed ? '' : `onclick="apri('${b.id}')"`}>
+      ${isClosed ? '<div class="status-tag">CHIUSO</div>' : ''}
+      <div class="ch">
+        <div class="ci" style="background:${b.colore_icona || '#f3f4f6'}">${b.icona || '🚀'}</div>
+        <div>
+          <div class="ct">${b.titolo}</div>
+          <div class="ce">${b.ente || ''} · ${b.riferimento || ''}</div>
+        </div>
+      </div>
+      <div class="cm">${badges}</div>
+      <div class="pl">✔ Rientri se…</div>
+      <div class="pills">${pills}</div>
+      <div class="db">
+        <span class="dt">Scadenza: <strong>${b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : 'Fondi disponibili'}</strong></span>
+        <button class="btn-d ${isClosed ? 'closed' : ''}" ${isClosed ? 'disabled' : ''}>${isClosed ? 'Bando Chiuso' : 'Scopri di più →'}</button>
+      </div>
+    </div>
+  `;
+}
+
+function createModalHTML(b) {
+  const cosPaga = (b.cosa_paga || []).map(p => `<li><span class="dot">✔</span>${p}</li>`).join('');
+  const chiPuo = (b.chi_puo_accedere || []).map(p => `<li><span class="dot">→</span>${p}</li>`).join('');
+  const regioni = (b.regioni_ammesse || []).map(r => `<div class="rc ${r === 'Puglia' ? 'hl2' : ''}">${r === 'Puglia' ? '🌿 ' : ''}${r}</div>`).join('');
+
+  return `
+    <div class="ov" id="${b.id}">
+     <div class="modal">
+      <div class="mh">
+       <div class="mt">${b.titolo}</div>
+       <div class="me">${b.riferimento || ''} · Gestore: ${b.ente || ''}</div>
+       <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="badge bg">✅ ${formatDateRange(b.data_apertura, b.scadenza)}</span>
+        <span class="badge bb">${b.budget_max || ''}</span>
+       </div>
+      </div>
+      <div class="mb">
+       <div class="ms">
+        <h3>🎯 Cos'è – In parole semplici</h3>
+        <p style="font-size:14.5px;line-height:1.6;color:#374151;">${b.descrizione_breve || ''}</p>
+       </div>
+       <div class="ms">
+        <h3>✅ Chi può accedere?</h3>
+        <ul class="pl2">${chiPuo}</ul>
+        <div class="rg">${regioni}</div>
+       </div>
+       <div class="ms">
+        <h3>📚 Cosa paga il bando?</h3>
+        <ul class="pl2">${cosPaga}</ul>
+       </div>
+       <div class="ms">
+        <h3>🧮 Simulatore Contributo</h3>
+        <p style="font-size:13px; color:var(--m);">Usa il modulo di contatto per una simulazione personalizzata basata sui tuoi dipendenti e investimenti.</p>
+       </div>
+      </div>
+      <div class="mf">
+       <button class="btn-p" onclick="apriForm('${b.titolo.replace(/'/g, "\\'")}')">🚀 Voglio Partecipare – Contattami</button>
+       <button class="btn-x" onclick="chiudi('${b.id}')">✕ Chiudi</button>
+      </div>
+     </div>
+    </div>
+  `;
+}
+
+function formatDateRange(start, end) {
+  if (!start && !end) return 'Sempre attivo';
+  const s = start ? new Date(start).toLocaleDateString('it-IT', { day: 'numeric', month: 'short' }) : '';
+  const e = end ? new Date(end).toLocaleDateString('it-IT', { day: 'numeric', month: 'short' }) : 'Esaurimento';
+  return `${s} → ${e}`;
 }
 
 function apri(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
