@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accedi | BandiPMI</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --p: #1a6ef5;
+            --pd: #0f4ec2;
+            --g: #f4f6fa;
+            --t: #1e1e2e;
+            --m: #6b7280;
+            --sh: 0 4px 24px rgba(26,110,245,0.15);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #eef2fb; 
+            color: var(--t);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .login-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo { 
+            font-size: 32px; 
+            font-weight: 800; 
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: var(--t);
+            display: block;
+        }
+        .logo span { color: var(--p); }
+        h1 { font-size: 20px; font-weight: 800; margin-bottom: 24px; color: var(--t); }
+        .fg { text-align: left; margin-bottom: 16px; }
+        .fg label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+        .fg input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .fg input:focus { border-color: var(--p); box-shadow: 0 0 0 4px rgba(26,110,245,0.1); }
+        .btn-p {
+            width: 100%;
+            background: var(--p);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+        .btn-p:hover { background: var(--pd); transform: translateY(-1px); }
+        .btn-p:disabled { opacity: 0.7; cursor: not-allowed; }
+        .links { margin-top: 24px; font-size: 14px; color: var(--m); }
+        .links a { color: var(--p); text-decoration: none; font-weight: 600; }
+        .links a:hover { text-decoration: underline; }
+        .err { 
+            background: #fee2e2; 
+            color: #dc2626; 
+            padding: 10px; 
+            border-radius: 10px; 
+            font-size: 13px; 
+            margin-bottom: 16px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <a href="index.html" class="logo">Bandi<span>PMI</span> 🚀</a>
+        <h1>Bentornato</h1>
+        <div id="errMsg" class="err"></div>
+        <form id="loginForm">
+            <div class="fg">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="es. mario@azienda.it" required>
+            </div>
+            <div class="fg">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" id="btnSubmit" class="btn-p">Accedi</button>
+        </form>
+        <div class="links">
+            Non hai un account? <a href="register.html">Registrati</a>
+        </div>
+    </div>
+
+    <script>
+        var supabaseUrl = 'https://kpgqagunzbgtlsxgeoub.supabase.co';
+        var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwZ3FhZ3VuemJndGxzeGdlb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NjQ4ODAsImV4cCI6MjA4OTE0MDg4MH0.ee94NWJEz1xRxugiWOn1_ognhrEEDEm7_-_QxPQyB_g';
+        var supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        const form = document.getElementById('loginForm');
+        const btn = document.getElementById('btnSubmit');
+        const errDiv = document.getElementById('errMsg');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errDiv.style.display = 'none';
+            btn.disabled = true;
+            btn.textContent = '⏳ Accesso in corso...';
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const { error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                });
+
+                if (error) throw error;
+                window.location.href = 'index.html';
+            } catch (error) {
+                errDiv.textContent = error.message === 'Invalid login credentials' ? 'Credenziali non valide' : error.message;
+                errDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Accedi';
+            }
+        });
+    </script>
+</body>
+</html>

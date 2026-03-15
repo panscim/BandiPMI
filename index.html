@@ -114,6 +114,9 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 <body>
 
 <header>
+  <div style="position: absolute; top: 10px; right: 20px; z-index: 100;" id="userHeader">
+    <a href="login.html" class="btn-d" style="text-decoration: none; display: inline-block;">Accedi</a>
+  </div>
   <div class="logo">Bandi<span>PMI</span> 🚀</div>
   <p>Trova i contributi giusti per la tua azienda, in 2 minuti</p>
   <div class="sb">
@@ -493,6 +496,26 @@ function simula(){
   if(sov==='si')note+=' Per il progetto sovraregionale servono PMI di almeno 2 regioni del Sud (max 10 imprese).';
   document.getElementById('sNote').textContent=note;
   el.classList.add('show');
+}
+
+// Auth State Handling
+supabase.auth.onAuthStateChange((event, session) => {
+  const userHeader = document.getElementById('userHeader');
+  if (session) {
+    userHeader.innerHTML = `
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:13px; font-weight:700; color:#fff;">${session.user.email}</span>
+        <button onclick="logout()" class="btn-d" style="background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3);">Esci</button>
+      </div>
+    `;
+  } else {
+    userHeader.innerHTML = `<a href="login.html" class="btn-d" style="text-decoration: none; display: inline-block;">Accedi</a>`;
+  }
+});
+
+async function logout() {
+  await supabase.auth.signOut();
+  window.location.reload();
 }
 </script>
 </body>
