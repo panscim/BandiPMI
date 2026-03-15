@@ -12,6 +12,12 @@
 #authMask{position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:sans-serif;font-size:18px;font-weight:bold;color:var(--p);}
 body{font-family:'Segoe UI',sans-serif;background:#eef2fb;color:var(--t);opacity:0;transition:opacity .3s;}
 body.ready{opacity:1;}
+.cb{position:fixed;bottom:24px;left:24px;right:24px;background:#fff;padding:24px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.15);z-index:1000;display:none;align-items:center;justify-content:space-between;gap:20px;max-width:900px;margin:0 auto;border:1px solid #eef2fb;}
+.cb p{font-size:14px;color:var(--m);line-height:1.5;margin:0;}
+.cb-btns{display:flex;gap:12px;flex-shrink:0;}
+.btn-c{background:var(--p);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.btn-c.sec{background:#f3f4f6;color:var(--t);}
+@media(max-width:600px){.cb{flex-direction:column;bottom:0;left:0;right:0;border-radius:20px 20px 0 0;padding:20px;}}
 header{background:linear-gradient(135deg,#1a6ef5,#0f4ec2);padding:28px 20px 60px;text-align:center;color:#fff;}
 .logo{font-size:28px;font-weight:800;}.logo span{color:#a5c8ff;}
 header p{margin-top:8px;font-size:15px;opacity:.9;}
@@ -116,6 +122,14 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 </head>
 <body onload="checkAuth()">
 <div id="authMask">⏳ Caricamento...</div>
+
+<div class="cb" id="cookieBanner">
+  <p>🍪 Utilizziamo i cookie per migliorare la tua esperienza e analizzare il traffico. Cliccando su "Accetta tutto", acconsenti al nostro utilizzo dei cookie.</p>
+  <div class="cb-btns">
+    <button class="btn-c sec" onclick="acceptCookies('essential')">Solo necessari</button>
+    <button class="btn-c" onclick="acceptCookies('all')">Accetta tutto</button>
+  </div>
+</div>
 
 <header>
   <div style="position: absolute; top: 10px; right: 20px; z-index: 100;" id="userHeader">
@@ -531,6 +545,30 @@ async function logout() {
   await supabase.auth.signOut();
   window.location.reload();
 }
+
+// Cookie Consent Logic
+function checkCookies() {
+  if (!localStorage.getItem('cookieConsent')) {
+    document.getElementById('cookieBanner').style.display = 'flex';
+  }
+}
+function acceptCookies(type) {
+  localStorage.setItem('cookieConsent', type);
+  document.cookie = "cookieConsent=" + type + "; max-age=" + (60*60*24*365) + "; path=/";
+  document.getElementById('cookieBanner').style.display = 'none';
+  
+  // Optionally save to user metadata if logged in
+  saveConsentToProfile(type);
+}
+async function saveConsentToProfile(type) {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    await supabase.auth.updateUser({
+      data: { cookie_consent: type, consent_date: new Date().toISOString() }
+    });
+  }
+}
+checkCookies();
 </script>
 </body>
 </html>
