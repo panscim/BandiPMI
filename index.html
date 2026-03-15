@@ -8,7 +8,9 @@
 <style>
 :root{--p:#1a6ef5;--pd:#0f4ec2;--g:#f4f6fa;--t:#1e1e2e;--m:#6b7280;--sh:0 4px 24px rgba(26,110,245,0.10);}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',sans-serif;background:#eef2fb;color:var(--t);}
+#authMask{position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:sans-serif;font-size:18px;font-weight:bold;color:var(--p);}
+body{font-family:'Segoe UI',sans-serif;background:#eef2fb;color:var(--t);opacity:0;transition:opacity .3s;}
+body.ready{opacity:1;}
 header{background:linear-gradient(135deg,#1a6ef5,#0f4ec2);padding:28px 20px 60px;text-align:center;color:#fff;}
 .logo{font-size:28px;font-weight:800;}.logo span{color:#a5c8ff;}
 header p{margin-top:8px;font-size:15px;opacity:.9;}
@@ -111,7 +113,8 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 @media(max-width:600px){.cnt,.sr,.cg,.sbk{grid-template-columns:1fr 1fr;}.cg,.sr{grid-template-columns:1fr;}}
 </style>
 </head>
-<body>
+<body onload="checkAuth()">
+<div id="authMask">⏳ Caricamento...</div>
 
 <header>
   <div style="position: absolute; top: 10px; right: 20px; z-index: 100;" id="userHeader">
@@ -380,6 +383,16 @@ var supabaseUrl = 'https://kpgqagunzbgtlsxgeoub.supabase.co';
 var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwZ3FhZ3VuemJndGxzeGdlb3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NjQ4ODAsImV4cCI6MjA4OTE0MDg4MH0.ee94NWJEz1xRxugiWOn1_ognhrEEDEm7_-_QxPQyB_g';
 var supabase = supabase.createClient(supabaseUrl, supabaseKey);
 var bandoSelezionato = '';
+
+async function checkAuth() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) {
+    window.location.href = 'login.html';
+  } else {
+    document.getElementById('authMask').style.display = 'none';
+    document.body.classList.add('ready');
+  }
+}
 
 function apri(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function chiudi(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
