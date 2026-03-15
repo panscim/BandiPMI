@@ -50,7 +50,7 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .cc{flex:1 1 40%;background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:var(--sh);}
 .cn{font-size:24px;font-weight:900;color:var(--p);}
 .cl{font-size:12px;color:var(--m);margin-top:2px;}
-.card{background:#fff;border-radius:18px;box-shadow:var(--sh);margin-bottom:20px;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer;border:1.5px solid transparent;}
+.card{background:#fff;border-radius:18px;box-shadow:var(--sh);margin-bottom:20px;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer;border:1.5px solid transparent;position:relative;}
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(26,110,245,.15);border-color:#c7d9ff;}
 .ch{padding:20px 22px 14px;display:flex;align-items:flex-start;gap:14px;}
 .ci{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
@@ -82,7 +82,7 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .card.closed .badge { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; }
 .card.closed .ci { background: #f3f4f6 !important; filter: grayscale(1); }
 
-.status-tag { position: absolute; top: 12px; right: 12px; font-size: 10px; font-weight: 900; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.status-tag { position: absolute; top: 12px; right: 58px; font-size: 10px; font-weight: 900; padding: 4px 12px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 .status-tag.closed { background: #4b5563; color: #fff; }
 .status-tag.upcoming { background: #d97706; color: #fff; }
 .status-tag.active { background: #16a34a; color: #fff; }
@@ -779,6 +779,7 @@ function navTo(t) {
   
   // View Switching
   document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+  document.querySelector('.filters').style.display = t === 'dashboard' ? '' : 'none';
   if (t === 'dashboard') { document.getElementById('bandiSections').classList.add('active'); window.scrollTo({top: 0, behavior: 'smooth'}); }
   if (t === 'salvati') { document.getElementById('savedSection').classList.add('active'); renderSaved(); }
   if (t === 'contatti') { document.getElementById('contactsSection').classList.add('active'); }
