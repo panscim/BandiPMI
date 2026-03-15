@@ -424,8 +424,12 @@ function createModalHTML(b) {
 
   // Prepare regional rates for the select change
   const tariffeStr = JSON.stringify(b.tariffe_regionali || {});
-  const hasDoc = b.documenti_links && b.documenti_links.length > 0;
-  const docUrl = hasDoc ? b.documenti_links[0] : '#';
+  
+  // Handle documents (can be strings or {label, url} objects)
+  const docs = (b.documenti_links || []).map(d => {
+    if (typeof d === 'string') return { label: 'Decreto Originale', url: d };
+    return d; // Already an object {label, url}
+  });
 
   return `
     <div class="ov" id="${b.id}">
@@ -433,7 +437,7 @@ function createModalHTML(b) {
       <div class="mh">
        <div class="modal-actions">
         <button class="btn-action primary" onclick="stampaBando('${b.id}')">🖨️ Stampa PDF Piano</button>
-        ${hasDoc ? `<button class="btn-action" onclick="window.open('${docUrl}', '_blank')">📄 Scarica Decreto Originale</button>` : ''}
+        ${docs.map(d => `<button class="btn-action" onclick="window.open('${d.url}', '_blank')">📄 ${d.label}</button>`).join('')}
        </div>
        <div class="mt">${b.icona || '🎓'} ${b.titolo}</div>
        <div class="me">${b.riferimento || ''} · Gestore: ${b.ente || ''}</div>
