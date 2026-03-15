@@ -114,15 +114,18 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .sg label{display:block;font-size:12px;font-weight:700;opacity:.85;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
 .sg select,.sg input{width:100%;padding:11px 14px;border-radius:12px;border:none;font-size:14px;color:var(--t);outline:none;}
 .btn-sim{width:100%;background:#fff;color:var(--p);border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px;}
-.sres{display:none;margin-top:16px;background:#fff;border-radius:16px;padding:20px;color:var(--t);}
+.sres{display:none;margin-top:20px;background:#fff;border-radius:24px;padding:32px;color:var(--t);border:1px solid #eef2fb;}
 .sres.show{display:block;}
-.srt{font-size:14px;font-weight:700;color:var(--m);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;}
-.sam{font-size:38px;font-weight:900;color:var(--p);}
-.saml{font-size:13px;color:var(--m);margin-top:2px;margin-bottom:14px;}
-.sbk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-.si{background:var(--g);border-radius:12px;padding:12px;text-align:center;}
-.sv{font-size:18px;font-weight:800;color:var(--p);}
-.sl{font-size:11px;color:var(--m);margin-top:3px;}
+.srt{font-size:14px;font-weight:800;color:var(--m);margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px;}
+.sam{font-size:52px;font-weight:900;color:var(--p);line-height:1.1;letter-spacing:-1px;}
+.sam.error{color:#3b82f6;} /* Blue for the error title as in screenshot */
+.saml{font-size:16px;color:var(--m);margin-top:8px;margin-bottom:24px;font-weight:600;}
+.sbk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;}
+.si{background:#f8fafc;border-radius:20px;padding:24px 12px;text-align:center;border:1px solid #f1f5f9;transition:all .2s;}
+.sv{font-size:24px;font-weight:900;color:var(--p);}
+.sl{font-size:12px;color:var(--m);margin-top:6px;font-weight:600;}
+.swarning{background:#fffbeb;border:1px solid #fef3c7;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;margin-top:20px;font-size:14px;line-height:1.5;color:#92400e;}
+.swarning i{font-size:18px;}
 
 /* FORM MODAL */
 .fm{background:#fff;border-radius:24px;max-width:500px;width:100%;padding:30px 28px;box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:92vh;overflow-y:auto;}
@@ -336,13 +339,17 @@ function createModalHTML(b) {
           <div class="sg"><label>Sovraregionale?</label><select id="sSov-${b.id}"><option value="no">No</option><option value="si">Sì (+bonus)</option></select></div>
           <div class="sg"><label>Tariffa Oraria (€)</label><input type="text" id="sTar-${b.id}" value="45.03" readonly style="background:#e8f4e8; color:#15803d; font-weight:700;"/></div>
          </div>
-         <button class="btn-sim" onclick="runSim('${b.id}', ${b.intensita_base||50}, ${b.intensita_bonus||20}, ${b.intensita_max||70})">⚡ Calcola</button>
+         <button class="btn-sim" onclick="runSim('${b.id}', ${b.intensita_base||50}, ${b.intensita_bonus||20}, ${b.intensita_max||70})">⚡ Calcola il mio contributo</button>
          <div class="sres" id="sRes-${b.id}">
-          <div class="sam" id="sAmt-${b.id}">€ 0</div>
+          <div class="srt">📊 STIMA DEL TUO RIMBORSO</div>
+          <div class="sam" id="sAmt-${b.id}">...</div>
+          <div class="saml" id="sAml-${b.id}">...</div>
           <div class="sbk">
-           <div class="si"><div class="sv" id="sPerc-${b.id}">0%</div><div class="sl">Contrib.</div></div>
-           <div class="si"><div class="sv" id="sSpesa-${b.id}">€0</div><div class="sl">Ammissibile</div></div>
+           <div class="si"><div class="sv" id="sPerc-${b.id}">-</div><div class="sl">% contributo</div></div>
+           <div class="si"><div class="sv" id="sSpesa-${b.id}">€0</div><div class="sl">Costo ammissibile</div></div>
+           <div class="si"><div class="sv" id="sTasca-${b.id}">-</div><div class="sl">Rimane a tuo carico</div></div>
           </div>
+          <div id="sWarn-${b.id}"></div>
          </div>
         </div>
        </div>
@@ -364,15 +371,41 @@ function runSim(id, base, bonusVal, max) {
   const ore = parseInt(document.getElementById('sOre-'+id).value)||1;
   const sov = document.getElementById('sSov-'+id).value;
   const tariffa = parseFloat(document.getElementById('sTar-'+id).value)||30;
+  
+  const resDiv = document.getElementById('sRes-'+id);
+  const amtDiv = document.getElementById('sAmt-'+id);
+  const amlDiv = document.getElementById('sAml-'+id);
+  const pDiv = document.getElementById('sPerc-'+id);
+  const sDiv = document.getElementById('sSpesa-'+id);
+  const tDiv = document.getElementById('sTasca-'+id);
+  const wDiv = document.getElementById('sWarn-'+id);
+
   if(reg==='nord'){ alert('Solo Sud Italia.'); return; }
+  
   const costo = dip * ore * tariffa;
-  const spesa = Math.min(Math.max(costo, 10000), 60000);
-  const perc = Math.min(base + (sov==='si'?bonusVal:0), (dim==='media'?60:max));
-  const contrib = Math.round(spesa * perc / 100);
-  document.getElementById('sAmt-'+id).textContent = '€ ' + contrib.toLocaleString('it-IT');
-  document.getElementById('sPerc-'+id).textContent = perc + '%';
-  document.getElementById('sSpesa-'+id).textContent = '€ ' + spesa.toLocaleString('it-IT');
-  document.getElementById('sRes-'+id).classList.add('show');
+  
+  if(costo < 10000) {
+    amtDiv.textContent = 'Sotto soglia minima';
+    amtDiv.classList.add('error');
+    amlDiv.textContent = 'Servono almeno €10.000 di costo ammissibile';
+    pDiv.textContent = '-';
+    sDiv.textContent = '€ ' + Math.round(costo).toLocaleString('it-IT');
+    tDiv.textContent = '-';
+    wDiv.innerHTML = `<div class="swarning"><i>⚠️</i> Il costo calcolato (€${Math.round(costo).toLocaleString('it-IT')}) è sotto la soglia minima di €10.000. Prova ad aumentare il numero di dipendenti o le ore di formazione per rientrare nel bando.</div>`;
+  } else {
+    amtDiv.classList.remove('error');
+    const spesa = Math.min(costo, 60000);
+    const perc = Math.min(base + (sov==='si'?bonusVal:0), (dim==='media'?60:max));
+    const contrib = Math.round(spesa * perc / 100);
+    
+    amtDiv.textContent = '€ ' + contrib.toLocaleString('it-IT');
+    amlDiv.textContent = 'a fondo perduto stimato';
+    pDiv.textContent = perc + '%';
+    sDiv.textContent = '€ ' + Math.round(spesa).toLocaleString('it-IT');
+    tDiv.textContent = '€ ' + Math.round(spesa - contrib).toLocaleString('it-IT');
+    wDiv.innerHTML = '';
+  }
+  resDiv.classList.add('show');
 }
 
 function formatDateRange(s, e) {
