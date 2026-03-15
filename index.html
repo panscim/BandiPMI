@@ -269,6 +269,56 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .btn-action:hover { background: #f1f5f9; border-color: #cbd5e1; color: var(--p); transform: translateY(-1px); }
 .btn-action.primary { background: #eff6ff; border-color: #bfdbfe; color: var(--p); }
 .btn-action.primary:hover { background: #dbeafe; }
+
+/* HAMBURGER & SIDEBAR */
+.hamburger { display: none; position: absolute; left: 20px; top: 50%; transform: translateY(-50%); cursor: pointer; z-index: 200; flex-direction: column; gap: 5px; padding: 8px; background: rgba(255,255,255,0.15); border-radius: 10px; border: none; }
+.hamburger span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+@media(min-width:601px) { .hamburger { display: flex; } }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1999; }
+.sidebar-overlay.open { display: block; }
+.sidebar { position: fixed; top: 0; left: -280px; width: 260px; height: 100vh; background: #fff; z-index: 2000; box-shadow: 8px 0 40px rgba(0,0,0,0.12); transition: left 0.3s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; }
+.sidebar.open { left: 0; }
+.sidebar-hd { background: linear-gradient(135deg,#1a6ef5,#0f4ec2); padding: 24px 20px 20px; color: #fff; }
+.sidebar-hd .logo { font-size: 20px; }
+.sidebar-hd p { font-size: 12px; opacity: .8; margin-top: 4px; }
+.sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+.sidebar-item { display: flex; align-items: center; gap: 12px; padding: 13px 20px; font-size: 14px; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.15s; border-left: 3px solid transparent; }
+.sidebar-item:hover { background: #f0f4ff; color: var(--p); border-left-color: var(--p); }
+.sidebar-item.active { background: #eff6ff; color: var(--p); border-left-color: var(--p); font-weight: 700; }
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid #f1f5f9; font-size: 13px; color: var(--m); }
+
+/* STATUS INLINE (desktop only) */
+.ct-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.status-inline { display: inline-flex; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.8px; flex-shrink: 0; }
+.status-inline.upcoming { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.status-inline.active { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.status-inline.closed { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+@media(max-width:600px) { .status-inline { display: none; } }
+
+/* HEADER */
+header { position: relative; transition: padding 0.35s ease; }
+header.compact { padding: 12px 20px !important; }
+
+/* SAVED SECTION */
+.saved-empty { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; text-align: center; }
+.saved-empty-icon { width: 72px; height: 72px; background: #eff6ff; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.saved-title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.saved-count-badge { background: var(--p); color: #fff; border-radius: 50px; padding: 3px 12px; font-size: 12px; font-weight: 800; }
+
+/* PROFILE REDESIGN */
+.profile-hero { background: linear-gradient(135deg,#1a6ef5,#0f4ec2); padding: 32px 20px 50px; text-align: center; color: #fff; margin: -20px -16px 0; border-radius: 0 0 28px 28px; }
+.profile-avatar-wrap { position: relative; display: inline-block; margin-bottom: 12px; cursor: pointer; }
+.profile-avatar { width: 90px; height: 90px; border-radius: 50%; border: 4px solid rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); font-size: 36px; overflow: hidden; }
+.profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profile-cam-btn { position: absolute; bottom: 2px; right: 2px; width: 26px; height: 26px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.25); pointer-events: none; }
+.profile-body { padding-top: 28px; }
+.profile-card { background: #fff; border-radius: 18px; padding: 20px; margin-bottom: 16px; box-shadow: var(--sh); }
+.profile-card h3 { font-size: 12px; font-weight: 800; color: var(--p); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px; }
+.pref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pref-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1.5px solid #e5e7eb; border-radius: 12px; cursor: pointer; transition: all 0.15s; font-size: 13px; font-weight: 600; color: #374151; user-select: none; }
+.pref-item.checked { border-color: var(--p); background: #eff6ff; color: var(--p); }
+.pref-check { width: 16px; height: 16px; border-radius: 4px; border: 2px solid #d1d5db; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: all 0.15s; }
+.pref-item.checked .pref-check { background: var(--p); border-color: var(--p); color: #fff; }
 </style>
 </head>
 <body onload="checkAuth()">
@@ -283,6 +333,9 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 </div>
 
 <header>
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div style="position: absolute; top: 10px; right: 20px; z-index: 100;" id="userHeader">
     <a href="login.html" class="btn-d" style="text-decoration: none; display: inline-block;">Accedi</a>
   </div>
@@ -292,6 +345,34 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
     <input type="text" id="si" placeholder="Cerca settore, attività…" oninput="flt()"/>
   </div>
 </header>
+
+<!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-hd">
+    <div class="logo">Bandi<span>PMI</span> 🚀</div>
+    <p>Contributi a fondo perduto</p>
+  </div>
+  <div class="sidebar-nav">
+    <div class="sidebar-item active" id="snav-dashboard" onclick="navTo('dashboard');toggleSidebar()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </div>
+    <div class="sidebar-item" id="snav-salvati" onclick="navTo('salvati');toggleSidebar()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      Bandi Salvati
+    </div>
+    <div class="sidebar-item" id="snav-contatti" onclick="navTo('contatti');toggleSidebar()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Contatti
+    </div>
+    <div class="sidebar-item" id="snav-profilo" onclick="navTo('profilo');toggleSidebar()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Il mio Profilo
+    </div>
+  </div>
+  <div class="sidebar-footer">© 2026 BandiPMI</div>
+</nav>
 
 <div class="filters">
   <button class="fb active" onclick="setF('tutti',this)">Tutti</button>
@@ -317,11 +398,19 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   </div>
 
   <div id="savedSection" class="view-section">
-    <div class="st">❤️ I tuoi bandi salvati</div>
-    <div id="savedContainer" style="padding: 20px 0;">
-      <div style="text-align:center; padding:80px 20px; color:var(--m);">
-        <i style="font-size:40px; display:block; margin-bottom:10px; font-style:normal;">❤️</i>
-        Nessun bando salvato ancora.
+    <div class="saved-title-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span style="font-size:18px;font-weight:800;color:var(--t);">Bandi Salvati</span>
+      <span class="saved-count-badge" id="savedCountBadge">0</span>
+    </div>
+    <div id="savedContainer">
+      <div class="saved-empty">
+        <div class="saved-empty-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;color:var(--t);">Nessun bando salvato</h3>
+        <p style="font-size:14px;color:var(--m);max-width:280px;line-height:1.5;">Salva i bandi che ti interessano per ritrovarli qui rapidamente.</p>
+        <button class="btn-d" style="margin-top:20px;" onclick="navTo('dashboard')">Esplora i bandi →</button>
       </div>
     </div>
   </div>
@@ -340,21 +429,40 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
   </div>
 
   <div id="profileSection" class="view-section">
-    <div class="st">👤 Il tuo Profilo</div>
-    <div class="faq-container" style="margin-top: 20px; text-align:center;">
-      <div class="profile-photo" id="profilePhoto">
-        <span id="photoPlaceholder">👤</span>
+    <input type="file" id="photoUploadInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)"/>
+    <div class="profile-hero">
+      <div class="profile-avatar-wrap" onclick="document.getElementById('photoUploadInput').click()">
+        <div class="profile-avatar" id="profilePhoto"><span id="photoPlaceholder">👤</span></div>
+        <div class="profile-cam-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
       </div>
-      <h2 id="profileNameDisplay" style="margin-bottom:5px;">Il tuo Nome</h2>
-      <p id="profileEmailDisplay" style="color:var(--m); font-size:14px; margin-bottom:25px;">email@azienda.it</p>
-      
-      <div style="text-align:left; max-width:400px; margin:0 auto;">
-        <div class="fg"><label>Nome e Cognome</label><input type="text" id="pNome" placeholder="es. Mario Rossi" onchange="saveProfile()"/></div>
-        <div class="fg"><label>Azienda</label><input type="text" id="pAzienda" placeholder="es. Rossi S.r.l." onchange="saveProfile()"/></div>
-        <div class="fg"><label>Foto URL (Placeholder)</label><input type="text" id="pPhotoUrl" placeholder="https://..." onchange="saveProfile()"/></div>
+      <h2 id="profileNameDisplay" style="font-size:20px;font-weight:800;margin-bottom:4px;">Il tuo Nome</h2>
+      <p id="profileEmailDisplay" style="opacity:.8;font-size:13px;">email@azienda.it</p>
+    </div>
+    <div class="profile-body">
+      <div class="profile-card">
+        <h3>Dati aziendali</h3>
+        <div class="fg"><label>Nome e Cognome</label><input type="text" id="pNome" placeholder="es. Mario Rossi" oninput="saveProfile()"/></div>
+        <div class="fg"><label>Ragione Sociale</label><input type="text" id="pAzienda" placeholder="es. Rossi S.r.l." oninput="saveProfile()"/></div>
+        <div class="fg"><label>Regione</label><select id="pRegione" onchange="saveProfile()"><option value="">Seleziona...</option><option>Puglia</option><option>Campania</option><option>Sicilia</option><option>Calabria</option><option>Basilicata</option><option>Sardegna</option><option>Molise</option><option>Altra regione</option></select></div>
+        <div class="fg"><label>Dimensione azienda</label><select id="pDimensione" onchange="saveProfile()"><option value="">Seleziona...</option><option>Micro (1–9 dip.)</option><option>Piccola (10–49 dip.)</option><option>Media (50–249 dip.)</option></select></div>
       </div>
-      
-      <button class="btn-p" onclick="logout()" style="background:#ef4444; margin-top:30px;">🚪 Esci dall'account</button>
+      <div class="profile-card">
+        <h3>Settori di interesse</h3>
+        <div class="pref-grid" id="prefGrid">
+          <div class="pref-item" data-pref="formazione" onclick="togglePref(this)"><div class="pref-check"></div>🎓 Formazione</div>
+          <div class="pref-item" data-pref="digitale" onclick="togglePref(this)"><div class="pref-check"></div>💻 Digitale</div>
+          <div class="pref-item" data-pref="investimenti" onclick="togglePref(this)"><div class="pref-check"></div>🏭 Investimenti</div>
+          <div class="pref-item" data-pref="verde" onclick="togglePref(this)"><div class="pref-check"></div>🌿 Verde</div>
+          <div class="pref-item" data-pref="sud" onclick="togglePref(this)"><div class="pref-check"></div>🌊 Sud Italia</div>
+          <div class="pref-item" data-pref="internazionale" onclick="togglePref(this)"><div class="pref-check"></div>🌍 Internazionale</div>
+        </div>
+      </div>
+      <div class="profile-card">
+        <h3>Account</h3>
+        <button class="btn-p" onclick="logout()" style="background: linear-gradient(135deg,#ef4444,#dc2626);">🚪 Esci dall'account</button>
+      </div>
     </div>
   </div>
 </main>
@@ -413,7 +521,11 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
     <div class="f-col">
       <div class="logo">Bandi<span>PMI</span> 🚀</div>
       <p>La piattaforma leader in Italia per la ricerca e la gestione dei contributi a fondo perduto.</p>
-      <div class="f-social"><a href="#">LN</a><a href="#">IG</a><a href="#">FB</a></div>
+      <div class="f-social">
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
     </div>
     <div class="f-col">
       <h4>Piattaforma</h4>
@@ -559,8 +671,11 @@ function createCardHTML(b, status) {
   
   let statusBadge = '';
   if (status === 'closed') statusBadge = '<div class="stamp-wrapper"><div class="stamp">CHIUSO</div></div>';
-  else if (status === 'upcoming') statusBadge = '<span class="status-tag upcoming">IN ARRIVO</span>';
-  else statusBadge = '<span class="status-tag active">ATTIVO</span>';
+
+  let statusInline = '';
+  if (status === 'upcoming') statusInline = '<span class="status-inline upcoming">In arrivo</span>';
+  else if (status === 'active') statusInline = '<span class="status-inline active">Attivo</span>';
+  else statusInline = '<span class="status-inline closed">Chiuso</span>';
   
   let timeBadge = '';
   if (status === 'closed') {
@@ -579,8 +694,11 @@ function createCardHTML(b, status) {
       ${statusBadge}
       <div class="ch">
         <div class="ci" style="background:${b.colore_icona || '#f3f4f6'}">${b.icona || '🚀'}</div>
-        <div>
-          <div class="ct">${b.titolo}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="ct-row">
+            <div class="ct">${b.titolo}</div>
+            ${statusInline}
+          </div>
           <div class="ce">${b.ente || ''} ${b.riferimento ? '· ' + b.riferimento : ''}</div>
         </div>
       </div>
@@ -790,6 +908,10 @@ function navTo(t) {
   const isHome = t === 'dashboard';
   document.querySelector('header p').style.display = isHome ? '' : 'none';
   document.querySelector('.sb').style.display = isHome ? '' : 'none';
+  document.querySelector('header').classList.toggle('compact', !isHome);
+  document.querySelectorAll('.sidebar-item').forEach(x => x.classList.remove('active'));
+  const snav = document.getElementById('snav-' + t);
+  if (snav) snav.classList.add('active');
   if (t === 'dashboard') { document.getElementById('bandiSections').classList.add('active'); window.scrollTo({top: 0, behavior: 'smooth'}); }
   if (t === 'salvati') { document.getElementById('savedSection').classList.add('active'); renderSaved(); }
   if (t === 'contatti') { document.getElementById('contactsSection').classList.add('active'); }
@@ -830,11 +952,13 @@ function shareBando(id, title) {
 async function renderSaved() {
   const ids = getSaved();
   const container = document.getElementById('savedContainer');
+  const badge = document.getElementById('savedCountBadge');
+  if (badge) badge.textContent = ids.length;
   if (ids.length === 0) {
-    container.innerHTML = `<div style="text-align:center; padding:80px 20px; color:var(--m);"><i style="font-size:40px; display:block; margin-bottom:10px; font-style:normal;">❤️</i>Nessun bando salvato ancora.</div>`;
+    container.innerHTML = `<div class="saved-empty"><div class="saved-empty-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><h3 style="font-size:17px;font-weight:800;margin-bottom:8px;color:var(--t);">Nessun bando salvato</h3><p style="font-size:14px;color:var(--m);max-width:280px;line-height:1.5;">Salva i bandi che ti interessano per ritrovarli qui rapidamente.</p><button class="btn-d" style="margin-top:20px;" onclick="navTo('dashboard')">Esplora i bandi →</button></div>`;
     return;
   }
-  container.innerHTML = '<div style="text-align:center; padding:20px;">⌛ Caricamento salvati...</div>';
+  container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--m);">⌛ Caricamento...</div>';
   const { data } = await supabaseClient.from('bandi').select('*').in('id', ids);
   if (data) {
     container.innerHTML = data.map(b => createCardHTML(b, b.is_active ? 'active' : 'closed')).join('');
@@ -843,10 +967,13 @@ async function renderSaved() {
 
 // PROFILE LOGIC
 function saveProfile() {
-  const d = { 
+  const existing = JSON.parse(localStorage.getItem('user_profile') || '{}');
+  const d = {
+    ...existing,
     nome: document.getElementById('pNome').value,
     azienda: document.getElementById('pAzienda').value,
-    photo: document.getElementById('pPhotoUrl').value
+    regione: document.getElementById('pRegione') ? document.getElementById('pRegione').value : (existing.regione || ''),
+    dimensione: document.getElementById('pDimensione') ? document.getElementById('pDimensione').value : (existing.dimensione || '')
   };
   localStorage.setItem('user_profile', JSON.stringify(d));
   loadProfile();
@@ -856,17 +983,58 @@ function loadProfile() {
   const d = JSON.parse(localStorage.getItem('user_profile') || '{}');
   if(document.getElementById('pNome')) document.getElementById('pNome').value = d.nome || '';
   if(document.getElementById('pAzienda')) document.getElementById('pAzienda').value = d.azienda || '';
-  if(document.getElementById('pPhotoUrl')) document.getElementById('pPhotoUrl').value = d.photo || '';
-  
+  if(document.getElementById('pRegione') && d.regione) document.getElementById('pRegione').value = d.regione;
+  if(document.getElementById('pDimensione') && d.dimensione) document.getElementById('pDimensione').value = d.dimensione;
+
   if(document.getElementById('profileNameDisplay')) document.getElementById('profileNameDisplay').textContent = d.nome || 'Il tuo Nome';
   if(document.getElementById('profilePhoto')) {
-    if(d.photo) document.getElementById('profilePhoto').innerHTML = `<img src="${d.photo}" />`;
-    else document.getElementById('profilePhoto').innerHTML = `<span>👤</span>`;
+    const wrap = document.getElementById('profilePhoto');
+    if(d.photo) wrap.innerHTML = `<img src="${d.photo}" />`;
+    else wrap.innerHTML = `<span id="photoPlaceholder">👤</span>`;
+  }
+
+  // Restore preferences
+  if (d.prefs && document.getElementById('prefGrid')) {
+    d.prefs.forEach(pref => {
+      const el = document.querySelector(`.pref-item[data-pref="${pref}"]`);
+      if (el) { el.classList.add('checked'); el.querySelector('.pref-check').textContent = '✓'; }
+    });
   }
 }
 async function logout(){ await supabaseClient.auth.signOut(); window.location.reload(); }
 function acceptCookies(t){ localStorage.setItem('cookieConsent',t); document.getElementById('cookieBanner').style.display='none'; }
 if(!localStorage.getItem('cookieConsent')) document.getElementById('cookieBanner').style.display='flex';
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+function handlePhotoUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const d = JSON.parse(localStorage.getItem('user_profile') || '{}');
+    d.photo = e.target.result;
+    localStorage.setItem('user_profile', JSON.stringify(d));
+    loadProfile();
+  };
+  reader.readAsDataURL(file);
+}
+
+function togglePref(el) {
+  el.classList.toggle('checked');
+  if (el.classList.contains('checked')) {
+    el.querySelector('.pref-check').textContent = '✓';
+  } else {
+    el.querySelector('.pref-check').textContent = '';
+  }
+  const prefs = Array.from(document.querySelectorAll('.pref-item.checked')).map(x => x.dataset.pref);
+  const d = JSON.parse(localStorage.getItem('user_profile') || '{}');
+  d.prefs = prefs;
+  localStorage.setItem('user_profile', JSON.stringify(d));
+}
 </script>
 </body>
 </html>
