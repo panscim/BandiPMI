@@ -30,9 +30,23 @@
         .back { margin-top: 40px; display: inline-block; color: var(--p); text-decoration: none; font-weight: 600; }
         footer { background: #f9fafb; padding: 60px 20px 40px; border-top: 1px solid #eef2fb; margin-top: 100px; text-align: center; }
         .f-btm p { font-size: 13px; color: var(--m); }
+        .cb{position:fixed;bottom:24px;left:24px;right:24px;background:#fff;padding:24px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.15);z-index:3000;display:none;align-items:center;justify-content:space-between;gap:20px;max-width:900px;margin:16px auto;border:1px solid #eef2fb;}
+        .cb p{font-size:14px;color:var(--m);line-height:1.5;margin:0;}
+        .cb-btns{display:flex;gap:12px;flex-shrink:0;}
+        .btn-c{background:var(--p);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;}
+        .btn-c.sec{background:#f3f4f6;color:var(--t);}
+        @media(max-width:600px){ .cb{flex-direction:column;bottom:0;left:0;right:0;border-radius:20px 20px 0 0;padding:20px 20px calc(24px + env(safe-area-inset-bottom));} .cb-btns{width:100%;} .btn-c{flex:1;text-align:center;} }
     </style>
 </head>
 <body>
+
+<div class="cb" id="cookieBanner">
+  <p>🍪 Utilizziamo i cookie per migliorare la tua esperienza e analizzare il traffico. Cliccando su "Accetta tutto", acconsenti al nostro utilizzo dei cookie.</p>
+  <div class="cb-btns">
+    <button class="btn-c sec" onclick="acceptCookies('essential')">Solo necessari</button>
+    <button class="btn-c" onclick="acceptCookies('all')">Accetta tutto</button>
+  </div>
+</div>
 
 <header>
     <a href="index.html" class="logo">Bandi<span>PMI</span> 🚀</a>
@@ -76,6 +90,11 @@
         <p>&copy; 2026 BandiPMI. Tutti i diritti riservati.</p>
     </div>
 </footer>
+
+<script>
+    function acceptCookies(t){ localStorage.setItem('cookieConsent',t); document.getElementById('cookieBanner').style.display='none'; }
+    if(!localStorage.getItem('cookieConsent')) document.getElementById('cookieBanner').style.display='flex';
+</script>
 
 </body>
 </html>
