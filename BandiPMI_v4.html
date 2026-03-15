@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BandiPMI</title>
+<style>
+:root{--p:#1a6ef5;--pd:#0f4ec2;--g:#f4f6fa;--t:#1e1e2e;--m:#6b7280;--sh:0 4px 24px rgba(26,110,245,0.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:#eef2fb;color:var(--t);}
+header{background:linear-gradient(135deg,#1a6ef5,#0f4ec2);padding:28px 20px 60px;text-align:center;color:#fff;}
+.logo{font-size:28px;font-weight:800;}.logo span{color:#a5c8ff;}
+header p{margin-top:8px;font-size:15px;opacity:.9;}
+.sb{margin:14px auto 0;max-width:480px;display:flex;background:#fff;border-radius:50px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.18);}
+.sb input{flex:1;border:none;outline:none;padding:14px 20px;font-size:15px;}
+.sb button{background:var(--p);color:#fff;border:none;padding:0 22px;font-size:18px;cursor:pointer;}
+.filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:900px;margin:-22px auto 0;padding:0 16px;position:relative;z-index:10;}
+.fb{background:#fff;border:2px solid #dbe4ff;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--p);cursor:pointer;transition:all .2s;}
+.fb.active,.fb:hover{background:var(--p);color:#fff;border-color:var(--p);}
+main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
+.st{font-size:13px;font-weight:700;color:var(--m);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.cnt{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.cc{flex:1 1 40%;background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:var(--sh);}
+.cn{font-size:24px;font-weight:900;color:var(--p);}
+.cl{font-size:12px;color:var(--m);margin-top:2px;}
+.card{background:#fff;border-radius:18px;box-shadow:var(--sh);margin-bottom:20px;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer;border:1.5px solid transparent;}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(26,110,245,.15);border-color:#c7d9ff;}
+.ch{padding:20px 22px 14px;display:flex;align-items:flex-start;gap:14px;}
+.ci{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.ct{font-size:17px;font-weight:700;line-height:1.3;}
+.ce{font-size:12px;color:var(--m);margin-top:3px;}
+.cm{display:flex;gap:8px;flex-wrap:wrap;padding:0 22px 14px;}
+.badge{border-radius:50px;padding:5px 13px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:5px;}
+.bg{background:#dcfce7;color:#16a34a;}.bb{background:#dbeafe;color:#1d4ed8;}.bo{background:#ffedd5;color:#ea580c;}.bp{background:#ede9fe;color:#7c3aed;}.br{background:#fee2e2;color:#dc2626;}
+.pl{font-size:11px;color:var(--m);font-weight:700;padding:0 22px 6px;text-transform:uppercase;letter-spacing:.7px;}
+.pills{display:flex;flex-wrap:wrap;gap:8px;padding:0 22px 18px;}
+.pill{background:var(--g);border-radius:10px;padding:7px 13px;font-size:12.5px;display:flex;align-items:center;gap:6px;}
+.db{background:#f8faff;border-top:1px solid #eef;padding:10px 22px;display:flex;justify-content:space-between;align-items:center;}
+.dt{font-size:12.5px;color:var(--m);}
+.dt strong{color:var(--t);}
+.btn-d{background:var(--p);color:#fff;border:none;border-radius:50px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;}
+.btn-d:hover{background:var(--pd);}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(10,20,50,.55);z-index:1000;align-items:center;justify-content:center;padding:16px;}
+.ov.open{display:flex;}
+.modal{background:#fff;border-radius:24px;max-width:660px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+.mh{padding:28px 28px 20px;border-bottom:1px solid #f0f0f0;}
+.mt{font-size:20px;font-weight:800;line-height:1.3;}
+.me{font-size:13px;color:var(--m);margin-top:4px;}
+.mb{padding:22px 28px;}
+.ms{margin-bottom:24px;}
+.ms h3{font-size:13px;font-weight:800;color:var(--p);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
+.pl2{list-style:none;}
+.pl2 li{padding:9px 0;border-bottom:1px solid #f4f4f4;font-size:14.5px;display:flex;gap:10px;line-height:1.4;}
+.pl2 li:last-child{border-bottom:none;}
+.dot{color:var(--p);font-size:18px;flex-shrink:0;}
+.hb{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:14px;padding:16px 18px;border-left:4px solid var(--p);margin-bottom:14px;}
+.ha{font-size:28px;font-weight:900;color:var(--p);}
+.hl{font-size:13px;color:var(--m);margin-top:2px;}
+.wb{background:#fff7ed;border-radius:14px;padding:14px 18px;border-left:4px solid #ea580c;font-size:13.5px;color:#7c2d12;margin-top:14px;}
+.mf{padding:20px 28px;border-top:1px solid #f0f0f0;}
+.btn-p{width:100%;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border:none;border-radius:14px;padding:16px;font-size:17px;font-weight:800;cursor:pointer;}
+.btn-p:hover{opacity:.9;}
+.btn-x{display:block;text-align:center;margin-top:12px;color:var(--m);font-size:13px;cursor:pointer;background:none;border:none;width:100%;}
+/* REGIONI */
+.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:10px;}
+.rc{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;color:#0369a1;text-align:center;}
+.rc.hl2{background:#dcfce7;border-color:#86efac;color:#15803d;}
+/* CONTRIBUTO */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.ccard{border-radius:14px;padding:16px;text-align:center;}
+.ccard.sm{background:linear-gradient(135deg,#dbeafe,#eff6ff);border:2px solid #93c5fd;}
+.ccard.md{background:linear-gradient(135deg,#ede9fe,#faf5ff);border:2px solid #c4b5fd;}
+.cperc{font-size:36px;font-weight:900;color:var(--p);}
+.ccard.md .cperc{color:#7c3aed;}
+.ctipo{font-size:12px;font-weight:700;color:var(--m);margin-top:2px;text-transform:uppercase;}
+.cdesc{font-size:12px;color:var(--t);margin-top:6px;line-height:1.4;}
+.bx{background:#f0fdf4;border:2px dashed #86efac;border-radius:14px;padding:14px 18px;margin-top:10px;display:flex;gap:12px;align-items:center;}
+.bxi{font-size:28px;flex-shrink:0;}
+.bxt .bxtt{font-size:14px;font-weight:800;color:#15803d;}
+.bxt .bxs{font-size:13px;color:#166534;margin-top:3px;line-height:1.4;}
+/* SIMULATORE */
+.sim{background:linear-gradient(135deg,#1a6ef5,#0f4ec2);border-radius:18px;padding:24px;color:#fff;}
+.sim h3{font-size:16px;font-weight:800;margin-bottom:4px;}
+.sim p{font-size:13px;opacity:.85;margin-bottom:18px;}
+.sr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.sg label{display:block;font-size:12px;font-weight:700;opacity:.85;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.sg select,.sg input{width:100%;padding:11px 14px;border-radius:12px;border:none;font-size:14px;color:var(--t);outline:none;}
+.btn-sim{width:100%;background:#fff;color:var(--p);border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px;}
+.sres{display:none;margin-top:16px;background:#fff;border-radius:16px;padding:20px;color:var(--t);}
+.sres.show{display:block;}
+.srt{font-size:14px;font-weight:700;color:var(--m);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;}
+.sam{font-size:38px;font-weight:900;color:var(--p);}
+.saml{font-size:13px;color:var(--m);margin-top:2px;margin-bottom:14px;}
+.sbk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.si{background:var(--g);border-radius:12px;padding:12px;text-align:center;}
+.sv{font-size:18px;font-weight:800;color:var(--p);}
+.sl{font-size:11px;color:var(--m);margin-top:3px;}
+.sn{font-size:12px;color:var(--m);margin-top:12px;padding-top:12px;border-top:1px solid #eee;line-height:1.5;}
+/* FORM */
+.fm{background:#fff;border-radius:24px;max-width:500px;width:100%;padding:30px 28px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+.fmtitle{font-size:20px;font-weight:800;margin-bottom:6px;}
+.fmsub{font-size:13.5px;color:var(--m);margin-bottom:22px;}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;}
+.fg input,.fg select{width:100%;padding:12px 16px;border:2px solid #e5e7eb;border-radius:12px;font-size:14px;outline:none;transition:border-color .2s;}
+.fg input:focus,.fg select:focus{border-color:var(--p);}
+.btn-sub{width:100%;background:var(--p);color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px;}
+@media(max-width:600px){.cnt,.sr,.cg,.sbk{grid-template-columns:1fr 1fr;}.cg,.sr{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Bandi<span>PMI</span> 🚀</div>
+  <p>Trova i contributi giusti per la tua azienda, in 2 minuti</p>
+  <div class="sb">
+    <input type="text" id="si" placeholder="Cerca settore, attività…" oninput="flt()"/>
+    <button>🔍</button>
+  </div>
+</header>
+
+<div class="filters">
+  <button class="fb active" onclick="setF('tutti',this)">Tutti</button>
+  <button class="fb" onclick="setF('formazione',this)">🎓 Formazione</button>
+  <button class="fb" onclick="setF('digitale',this)">💻 Digitale</button>
+  <button class="fb" onclick="setF('investimenti',this)">🏭 Investimenti</button>
+  <button class="fb" onclick="setF('verde',this)">🌿 Verde</button>
+  <button class="fb" onclick="setF('sud',this)">🌊 Sud Italia</button>
+</div>
+
+<main>
+  <div class="cnt">
+    <div class="cc"><div class="cn">5</div><div class="cl">Bandi attivi</div></div>
+    <div class="cc"><div class="cn">€50M</div><div class="cl">Fondi Competenze PMI</div></div>
+    <div class="cc"><div class="cn">70%</div><div class="cl">Max contributo</div></div>
+    <div class="cc"><div class="cn">21 apr</div><div class="cl">Apertura sportello</div></div>
+  </div>
+  <div class="st">📋 Bandi disponibili per la tua PMI</div>
+
+  <div class="card" data-tags="formazione competenze sud">
+    <div class="ch"><div class="ci" style="background:#dbeafe">🎓</div><div><div class="ct">Sviluppo Competenze Specialistiche PMI</div><div class="ce">MIMIT + Invitalia · DM 4/9/2025</div></div></div>
+    <div class="cm"><span class="badge bg">✅ 21 apr → 23 giu 2026</span><span class="badge bb">💶 Fino €60.000</span><span class="badge bo">📍 Sud Italia – Puglia inclusa</span></div>
+    <div class="pl">✔ Rientri se…</div>
+    <div class="pills"><div class="pill">👥 PMI fino 250 dip.</div><div class="pill">📍 Unità in Puglia o altro Sud</div><div class="pill">📚 Formi su digitale/green</div><div class="pill">💶 Budget 10k–60k</div></div>
+    <div class="db"><span class="dt">Sportello: <strong>21/04 – 23/06/2026</strong></span><button class="btn-d" onclick="apri('m1')">Scopri di più →</button></div>
+  </div>
+
+  <div class="card" data-tags="investimenti digitale" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
+    <div class="ch"><div class="ci" style="background:#fef9c3">🏭</div><div><div class="ct">Nuova Sabatini – Beni Strumentali</div><div class="ce">MIMIT + MedioCredito Centrale</div></div></div>
+    <div class="cm"><span class="badge bg">✅ Attivo</span><span class="badge bb">💶 Contributo su interessi</span><span class="badge bp">💻 Beni 4.0</span></div>
+    <div class="pl">✔ Rientri se…</div>
+    <div class="pills"><div class="pill">👥 PMI qualsiasi settore</div><div class="pill">🏭 Compri macchinari</div><div class="pill">💻 Software e beni 4.0</div></div>
+    <div class="db"><span class="dt">Scadenza: <strong>Fondi disponibili</strong></span><button class="btn-d">Scopri di più →</button></div>
+  </div>
+
+  <div class="card" data-tags="digitale verde investimenti" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
+    <div class="ch"><div class="ci" style="background:#dcfce7">⚡</div><div><div class="ct">Transizione 5.0 – Green & Digital</div><div class="ce">MIMIT – PNRR</div></div></div>
+    <div class="cm"><span class="badge bg">✅ Attivo</span><span class="badge bb">💶 Credito d'imposta 45%</span><span class="badge bp">🌿 Green</span></div>
+    <div class="pl">✔ Rientri se…</div>
+    <div class="pills"><div class="pill">⚡ Investi green + digitale</div><div class="pill">🏢 Qualsiasi dimensione</div></div>
+    <div class="db"><span class="dt">Scadenza: <strong>31/12/2025</strong></span><button class="btn-d">Scopri di più →</button></div>
+  </div>
+
+  <div class="card" data-tags="investimenti sud" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
+    <div class="ch"><div class="ci" style="background:#ede9fe">🌊</div><div><div class="ct">Contratti di Sviluppo – Sud Italia</div><div class="ce">MIMIT + Invitalia</div></div></div>
+    <div class="cm"><span class="badge bg">✅ Aperto</span><span class="badge bb">💶 Fino 75% fondo perduto</span><span class="badge br">🌊 Solo Sud</span></div>
+    <div class="pl">✔ Rientri se…</div>
+    <div class="pills"><div class="pill">🌊 Progetto nel Mezzogiorno</div><div class="pill">💼 Grande investimento</div><div class="pill">🏭 Industria/Turismo/Agro</div></div>
+    <div class="db"><span class="dt">Scadenza: <strong>Sportello aperto</strong></span><button class="btn-d">Scopri di più →</button></div>
+  </div>
+
+  <div class="card" data-tags="formazione digitale" style="position:relative;opacity:.55;cursor:not-allowed;pointer-events:none;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(30,30,46,.82);color:#fff;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:800;z-index:5;white-space:nowrap;">🔧 In lavorazione</div>
+    <div class="ch"><div class="ci" style="background:#fce7f3">🚀</div><div><div class="ct">Voucher Innovation Manager</div><div class="ce">MIMIT – Manager innovazione PMI</div></div></div>
+    <div class="cm"><span class="badge bo">⚠️ Prossima apertura</span><span class="badge bb">💶 Fino €80.000</span><span class="badge bp">🧠 Solo PMI</span></div>
+    <div class="pl">✔ Rientri se…</div>
+    <div class="pills"><div class="pill">👥 PMI fino 250 dip.</div><div class="pill">🧠 Vuoi un manager innovazione</div></div>
+    <div class="db"><span class="dt">Scadenza: <strong>In arrivo 2026</strong></span><button class="btn-d">Scopri di più →</button></div>
+  </div>
+</main>
+
+<!-- MODAL 1 -->
+<div class="ov" id="m1">
+ <div class="modal">
+  <div class="mh">
+   <div class="mt">🎓 Sviluppo Competenze Specialistiche PMI</div>
+   <div class="me">DM 4/9/2025 · DD 26/1/2026 · DD 10/2/2026 · Gestore: Invitalia</div>
+   <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+    <span class="badge bg">✅ 21 apr → 23 giu 2026</span>
+    <span class="badge bb">💶 Progetti 10k–60k</span>
+    <span class="badge bo">🏃 Graduatoria</span>
+   </div>
+  </div>
+  <div class="mb">
+   <div class="ms">
+    <h3>🎯 Cos'è – In parole semplici</h3>
+    <p style="font-size:14.5px;line-height:1.6;color:#374151;">Lo Stato paga fino al 70% dei <strong>corsi di formazione</strong> per i tuoi dipendenti su digitale, innovazione e green. Tu organizzi i corsi con un'agenzia esterna e ricevi il rimborso a <strong>fondo perduto</strong>: soldi che non devi restituire.</p>
+   </div>
+   <div class="ms">
+    <h3>✅ Chi può accedere?</h3>
+    <ul class="pl2">
+     <li><span class="dot">→</span><strong>Solo PMI:</strong> micro, piccole o medie imprese (fino 250 dipendenti, fatturato ≤50M€)</li>
+     <li><span class="dot">→</span>Regolarmente iscritta al Registro Imprese, non in liquidazione</li>
+     <li><span class="dot">→</span><strong>Devi avere almeno un punto operativo</strong> in una di queste regioni:</li>
+    </ul>
+    <div class="rg">
+     <div class="rc hl2">🌿 Puglia</div>
+     <div class="rc">Campania</div>
+     <div class="rc">Sicilia</div>
+     <div class="rc">Calabria</div>
+     <div class="rc">Basilicata</div>
+     <div class="rc">Sardegna</div>
+     <div class="rc">Molise</div>
+    </div>
+    <p style="font-size:12.5px;color:var(--m);margin-top:8px;">💡 La sede legale può essere al Nord: conta dove hai dipendenti o filiali.</p>
+   </div>
+   <div class="ms">
+    <h3>💶 Quanto puoi ricevere?</h3>
+    <div class="cg">
+     <div class="ccard sm"><div class="cperc">50%</div><div class="ctipo">Base per tutti</div><div class="cdesc">Ogni PMI parte dal 50% di rimborso sulle spese di formazione</div></div>
+     <div class="ccard md"><div class="cperc">+20%</div><div class="ctipo">Bonus extra</div><div class="cdesc">Se coinvolgi PMI di almeno 2 regioni diverse del Sud</div></div>
+    </div>
+    <div class="bx">
+     <div class="bxi">🏆</div>
+     <div class="bxt"><div class="bxtt">Massimo: 70% micro/piccole · 60% medie</div><div class="bxs">Budget totale: <strong>50 milioni €</strong>. Il 40% è riservato ad automotive e moda/tessile/arredamento.</div></div>
+    </div>
+   </div>
+   <div class="ms">
+    <h3>📚 Cosa paga il bando?</h3>
+    <ul class="pl2">
+     <li><span class="dot">✔</span>Corsi su: digitale, green, AI, IoT, sostenibilità</li>
+     <li><span class="dot">✔</span>Compensi formatori e agenzie formative</li>
+     <li><span class="dot">✔</span>Materiali didattici e attrezzature usate per la formazione</li>
+     <li><span class="dot">✔</span>Ore dei tuoi dipendenti in aula (calcolate a tariffa oraria)</li>
+     <li><span class="dot">✗</span>NON paga: stipendi ordinari, macchinari, marketing</li>
+    </ul>
+   </div>
+   <div class="ms">
+    <h3>🧮 Simula il tuo contributo</h3>
+    <div class="sim">
+     <h3>Quanti soldi puoi ricevere?</h3>
+     <p>La formula ufficiale del bando: <strong>N. dipendenti × Ore di formazione × Tariffa oraria regionale</strong></p>
+     <div class="sr">
+      <div class="sg"><label>Dimensione azienda</label>
+       <select id="sDim"><option value="micro">Micro (1–9 dip.)</option><option value="piccola" selected>Piccola (10–49 dip.)</option><option value="media">Media (50–249 dip.)</option></select>
+      </div>
+      <div class="sg"><label>Regione unità operativa</label>
+       <select id="sReg">
+        <option value="puglia">Puglia</option>
+        <option value="campania">Campania</option>
+        <option value="sicilia">Sicilia</option>
+        <option value="calabria">Calabria</option>
+        <option value="basilicata">Basilicata</option>
+        <option value="sardegna">Sardegna</option>
+        <option value="molise">Molise</option>
+        <option value="nord">Nord / Centro ❌</option>
+       </select>
+      </div>
+     </div>
+     <div class="sr">
+      <div class="sg"><label>N. dipendenti coinvolti</label>
+       <input type="number" id="sDip" value="5" min="1" max="250" placeholder="es. 5"/>
+      </div>
+      <div class="sg"><label>Ore di formazione previste</label>
+       <input type="number" id="sOre" value="40" min="1" placeholder="es. 40"/>
+      </div>
+     </div>
+     <div class="sr">
+      <div class="sg"><label>Progetto sovraregionale?</label>
+       <select id="sSov"><option value="no">No – solo la mia azienda</option><option value="si">Sì – con PMI di altre regioni Sud</option></select>
+      </div>
+      <div class="sg"><label>Tariffa oraria stimata (€/ora/persona)</label>
+       <input type="number" id="sTar" value="45.03" min="1" placeholder="es. 30" readonly style="background:#e8f4e8;font-weight:700;color:#15803d;"/>
+      </div>
+     </div>
+     <button class="btn-sim" onclick="simula()">⚡ Calcola il mio contributo</button>
+     <div class="sres" id="sRes">
+      <div class="srt">📊 Stima del tuo rimborso</div>
+      <div class="sam" id="sAmt">€ 0</div>
+      <div class="saml" id="sAml">a fondo perduto stimato</div>
+      <div class="sbk">
+       <div class="si"><div class="sv" id="sPerc">0%</div><div class="sl">% contributo</div></div>
+       <div class="si"><div class="sv" id="sSpesa">€0</div><div class="sl">Costo ammissibile</div></div>
+       <div class="si"><div class="sv" id="sTasca">€0</div><div class="sl">Rimane a tuo carico</div></div>
+      </div>
+      <div class="sn" id="sNote"></div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="mf">
+   <button class="btn-p" onclick="apriForm('Sviluppo Competenze Specialistiche PMI')">🚀 Voglio Partecipare – Contattami</button>
+   <button class="btn-x" onclick="chiudi('m1')">✕ Chiudi</button>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL 2 -->
+<div class="ov" id="m2">
+ <div class="modal">
+  <div class="mh"><div class="mt">🏭 Nuova Sabatini – Beni Strumentali</div><div class="me">MIMIT + MedioCredito Centrale · L.232/2016</div></div>
+  <div class="mb">
+   <div class="hb"><div class="ha">Risparmio interessi</div><div class="hl">Lo Stato copre parte degli interessi del tuo finanziamento per macchinari</div></div>
+   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Compri macchinari o software con un prestito bancario e lo Stato ti rimborsa una quota degli interessi. Per beni 4.0 il contributo è più alto.</p></div>
+   <div class="ms"><h3>✅ Chi può?</h3><ul class="pl2"><li><span class="dot">→</span>PMI qualsiasi settore, sede in Italia · Anche start-up</li></ul></div>
+   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span>Finanziamento da <strong>€20.000 a €4 milioni</strong></li><li><span class="dot">→</span>Contributo maggiorato per beni <strong>4.0 e green</strong></li></ul></div>
+  </div>
+  <div class="mf"><button class="btn-p" onclick="apriForm('Nuova Sabatini')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m2')">✕ Chiudi</button></div>
+ </div>
+</div>
+
+<!-- MODAL 3 -->
+<div class="ov" id="m3">
+ <div class="modal">
+  <div class="mh"><div class="mt">⚡ Transizione 5.0 – Green & Digital</div><div class="me">MIMIT · PNRR Missione 7</div></div>
+  <div class="mb">
+   <div class="hb"><div class="ha">Fino al 45%</div><div class="hl">Credito d'imposta su investimenti green + digitali</div></div>
+   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Investi in macchinari 4.0 che riducono i consumi energetici e lo Stato ti fa pagare meno tasse. Più risparmi energia, più alto è il bonus.</p></div>
+   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span><strong>35–45%</strong> per investimenti fino €2,5M</li><li><span class="dot">→</span><strong>15–25%</strong> tra €2,5M e €10M</li></ul></div>
+  </div>
+  <div class="mf"><button class="btn-p" onclick="apriForm('Transizione 5.0')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m3')">✕ Chiudi</button></div>
+ </div>
+</div>
+
+<!-- MODAL 4 -->
+<div class="ov" id="m4">
+ <div class="modal">
+  <div class="mh"><div class="mt">🌊 Contratti di Sviluppo – Sud Italia</div><div class="me">MIMIT + Invitalia · Mezzogiorno</div></div>
+  <div class="mb">
+   <div class="hb"><div class="ha">Fino al 75%</div><div class="hl">A fondo perduto per grandi investimenti nel Mezzogiorno · Puglia ✅</div></div>
+   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Vuoi aprire o ampliare qualcosa di importante in Puglia? Invitalia ti copre fino al 75% se crei nuovi posti di lavoro stabili.</p></div>
+   <div class="ms"><h3>✅ Chi può?</h3><ul class="pl2"><li><span class="dot">→</span>Qualsiasi impresa · Investimento min. <strong>€20M</strong> nel Mezzogiorno · Nuova occupazione</li></ul></div>
+   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span>Piccole <strong>75%</strong> · Medie <strong>65%</strong> · Grandi <strong>50%</strong></li></ul></div>
+  </div>
+  <div class="mf"><button class="btn-p" onclick="apriForm('Contratti di Sviluppo Sud')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m4')">✕ Chiudi</button></div>
+ </div>
+</div>
+
+<!-- MODAL 5 -->
+<div class="ov" id="m5">
+ <div class="modal">
+  <div class="mh"><div class="mt">🚀 Voucher Innovation Manager</div><div class="me">MIMIT · Manager per l'innovazione PMI</div></div>
+  <div class="mb">
+   <div class="hb"><div class="ha">Fino a €80.000</div><div class="hl">Per pagare un manager esperto in innovazione e digitalizzazione</div></div>
+   <div class="ms"><h3>🎯 In parole semplici</h3><p style="font-size:14.5px;line-height:1.6;color:#374151;">Lo Stato paga fino a €80.000 per farti avere un manager specializzato in 4.0 o green. Perfetto se vuoi innovare ma non hai competenze interne.</p></div>
+   <div class="ms"><h3>💶 Quanto?</h3><ul class="pl2"><li><span class="dot">→</span>Piccole: <strong>70%</strong> max €80.000 · Medie: <strong>50%</strong> max €60.000</li></ul></div>
+  </div>
+  <div class="mf"><button class="btn-p" onclick="apriForm('Voucher Innovation Manager')">🚀 Voglio Partecipare – Contattami</button><button class="btn-x" onclick="chiudi('m5')">✕ Chiudi</button></div>
+ </div>
+</div>
+
+<!-- FORM MODAL -->
+<div class="ov" id="mForm">
+ <div class="fm">
+  <div class="fmtitle">🚀 Richiedi una consulenza gratuita</div>
+  <div class="fmsub" id="fSub">Ti contatteremo per valutare insieme la tua candidatura.</div>
+  <div class="fg"><label>Nome e Cognome *</label><input type="text" placeholder="es. Mario Rossi"/></div>
+  <div class="fg"><label>Ragione Sociale *</label><input type="text" placeholder="es. Rossi S.r.l."/></div>
+  <div class="fg"><label>Partita IVA *</label><input type="text" placeholder="es. 01234567890"/></div>
+  <div class="fg"><label>N. dipendenti</label><select><option>1–5</option><option>6–15</option><option>16–50</option><option>51–250</option></select></div>
+  <div class="fg"><label>Regione</label><select><option>Puglia</option><option>Campania</option><option>Sicilia</option><option>Calabria</option><option>Basilicata</option><option>Sardegna</option><option>Molise</option><option>Altra</option></select></div>
+  <div class="fg"><label>Telefono *</label><input type="tel" placeholder="+39 333 1234567"/></div>
+  <div class="fg"><label>Email *</label><input type="email" placeholder="mario@azienda.it"/></div>
+  <button class="btn-sub" onclick="inviaForm()">✅ Invia – Ti contatto entro 24h</button>
+  <button class="btn-x" onclick="chiudi('mForm')" style="margin-top:12px;">✕ Annulla</button>
+ </div>
+</div>
+
+<script>
+function apri(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function chiudi(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+function apriForm(nome){document.querySelectorAll('.ov.open').forEach(function(m){m.classList.remove('open');});document.getElementById('fSub').textContent='Bando: '+nome+' - Ti contatteremo entro 24 ore.';document.getElementById('mForm').classList.add('open');document.body.style.overflow='hidden';}
+function inviaForm(){alert('Richiesta inviata! Ti contatteremo entro 24 ore.');chiudi('mForm');}
+function setF(tag,btn){document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.querySelectorAll('.card').forEach(function(c){c.style.display=(tag==='tutti'||c.dataset.tags.indexOf(tag)>-1)?'':'none';});}
+function flt(){var q=document.getElementById('si').value.toLowerCase();document.querySelectorAll('.card').forEach(function(c){c.style.display=c.innerText.toLowerCase().indexOf(q)>-1?'':'none';});}
+document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov){ov.classList.remove('open');document.body.style.overflow='';}});});
+var tariffe={'puglia':45.03,'campania':46.13,'sicilia':47.22,'calabria':41.19,'basilicata':47.22,'sardegna':46.13,'molise':45.03,'nord':0};
+var sRegEl=document.getElementById('sReg');
+if(sRegEl){sRegEl.addEventListener('change',function(){var t=tariffe[this.value]||30;var el=document.getElementById('sTar');if(el){el.value=(this.value==='nord'?'-':t);}});}
+function simula(){
+  var dim=document.getElementById('sDim').value;
+  var reg=document.getElementById('sReg').value;
+  var dip=parseInt(document.getElementById('sDip').value)||1;
+  var ore=parseInt(document.getElementById('sOre').value)||1;
+  var sov=document.getElementById('sSov').value;
+  var el=document.getElementById('sRes');
+
+  if(reg==='nord'){
+    document.getElementById('sAmt').textContent='Non ammesso';
+    document.getElementById('sAml').textContent='Questo bando richiede una sede operativa in una regione del Sud Italia';
+    document.getElementById('sPerc').textContent='0%';
+    document.getElementById('sSpesa').textContent='-';
+    document.getElementById('sTasca').textContent='-';
+    document.getElementById('sNote').textContent='Se hai una filiale, magazzino o punto operativo al Sud potresti comunque rientrare. Contattaci per una valutazione gratuita.';
+    el.classList.add('show');return;
+  }
+
+  // Tariffe orarie per regione (Allegato 3, DD 26/01/2026 - costi unitari semplificati FSE+)
+  var tariffe={'puglia':45.03,'campania':46.13,'sicilia':47.22,'calabria':41.19,'basilicata':47.22,'sardegna':46.13,'molise':45.03};
+  var tariffa=tariffe[reg]||30;
+  document.getElementById('sTar').value=tariffa;
+
+  // Formula ufficiale bando: Costo ammissibile = N_dip × N_ore × Tariffa
+  var costoCalc=dip*ore*tariffa;
+
+  // Vincoli bando: min 10.000, max 60.000
+  var note='';
+  if(costoCalc<10000){
+    note='⚠️ Il costo calcolato (€'+costoCalc.toLocaleString('it-IT')+') è sotto la soglia minima di €10.000. ';
+    note+='Prova ad aumentare il numero di dipendenti o le ore di formazione per rientrare nel bando.';
+    document.getElementById('sAmt').textContent='Sotto soglia minima';
+    document.getElementById('sAml').textContent='Servono almeno €10.000 di costo ammissibile';
+    document.getElementById('sPerc').textContent='-';
+    document.getElementById('sSpesa').textContent='€ '+costoCalc.toLocaleString('it-IT');
+    document.getElementById('sTasca').textContent='-';
+    document.getElementById('sNote').textContent=note;
+    el.classList.add('show');return;
+  }
+  var spesa=Math.min(costoCalc,60000);
+  if(costoCalc>60000){note='ℹ️ Il costo calcolato (€'+costoCalc.toLocaleString('it-IT')+') supera il massimo di €60.000. Il contributo viene calcolato sul tetto massimo ammissibile. ';}
+
+  // Intensità aiuto
+  var base=50;
+  var bonus=(sov==='si')?(dim==='media'?10:20):0;
+  var tot=Math.min(base+bonus,dim==='media'?60:70);
+  var contrib=Math.round(spesa*tot/100);
+  var tasca=spesa-contrib;
+
+  document.getElementById('sAmt').textContent='€ '+contrib.toLocaleString('it-IT');
+  document.getElementById('sAml').textContent='a fondo perduto stimato (non da restituire)';
+  document.getElementById('sPerc').textContent=tot+'%';
+  document.getElementById('sSpesa').textContent='€ '+spesa.toLocaleString('it-IT');
+  document.getElementById('sTasca').textContent='€ '+tasca.toLocaleString('it-IT');
+
+  note+='Formula: '+dip+' dip. × '+ore+' ore × €'+tariffa+'/ora = €'+costoCalc.toLocaleString('it-IT')+' di costo ammissibile. ';
+  note+='Intensità aiuto: '+tot+'% (base 50%'+(bonus>0?' + '+bonus+'% bonus sovraregionale':'')+').';
+  if(sov==='si')note+=' Per il progetto sovraregionale servono PMI di almeno 2 regioni del Sud (max 10 imprese).';
+  document.getElementById('sNote').textContent=note;
+  el.classList.add('show');
+}
+</script>
+</body>
+</html>
