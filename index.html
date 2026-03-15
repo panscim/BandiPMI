@@ -87,6 +87,32 @@ main{max-width:900px;margin:30px auto 60px;padding:0 16px;}
 .status-tag.upcoming { background: #d97706; color: #fff; }
 .status-tag.active { background: #16a34a; color: #fff; }
 
+.stamp-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+.stamp {
+  border: 5px solid #ef4444;
+  color: #ef4444;
+  font-size: 26px;
+  font-weight: 900;
+  padding: 6px 20px;
+  text-transform: uppercase;
+  transform: rotate(-15deg);
+  opacity: 0.85;
+  letter-spacing: 2px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+  font-family: 'Georgia', serif;
+}
+
 .section-header { display: flex; align-items: center; gap: 10px; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 2px solid #eef2fb; }
 .section-header h2 { font-size: 18px; font-weight: 800; color: var(--t); }
 .section-header .dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -353,7 +379,7 @@ function createCardHTML(b, status) {
   const pills = (b.requisiti_pillole || []).map(p => `<div class="pill">${p}</div>`).join('');
   
   let statusBadge = '';
-  if (status === 'closed') statusBadge = '<span class="status-tag closed">SOLD OUT</span>';
+  if (status === 'closed') statusBadge = '<div class="stamp-wrapper"><div class="stamp">CHIUSO</div></div>';
   else if (status === 'upcoming') statusBadge = '<span class="status-tag upcoming">IN ARRIVO</span>';
   else statusBadge = '<span class="status-tag active">ATTIVO</span>';
   
