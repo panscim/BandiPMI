@@ -353,25 +353,24 @@ async function loadBandi() {
     modalContainer.innerHTML += createModalHTML(b);
   });
 
-  const renderSection = (title, list, status) => {
+  const renderSection = (list, status) => {
     if (list.length === 0) return '';
-    const statusLabel = status === 'active' ? 'Bandi Attivi' : status === 'upcoming' ? 'In Prossima Apertura' : 'Bandi Chiusi (Sold Out)';
-    const icon = status === 'active' ? '🟢' : status === 'upcoming' ? '⏳' : '🚫';
+    const statusLabel = status === 'active' ? 'Bandi Attivi' : status === 'upcoming' ? 'In Prossima Apertura' : 'Bandi Chiusi';
     
     return `
       <div class="status-section">
         <div class="section-header ${status}">
           <div class="dot"></div>
-          <h2>${icon} ${statusLabel}</h2>
+          <h2>${statusLabel}</h2>
         </div>
         <div>${list.map(b => createCardHTML(b, status)).join('')}</div>
       </div>`;
   };
 
   container.innerHTML = 
-    renderSection('Attivi', groups.active, 'active') +
-    renderSection('In Arrivo', groups.upcoming, 'upcoming') +
-    renderSection('Chiusi', groups.closed, 'closed');
+    renderSection(groups.upcoming, 'upcoming') +
+    renderSection(groups.active, 'active') +
+    renderSection(groups.closed, 'closed');
 }
 
 function createCardHTML(b, status) {
@@ -411,7 +410,7 @@ function createCardHTML(b, status) {
       <div class="pills">${pills}</div>
       <div class="db">
         <div class="dt">${status === 'upcoming' ? 'Apre il:' : 'Scadenza:'} <strong>${status === 'closed' ? 'TERMINATO' : (status === 'upcoming' ? new Date(b.data_apertura).toLocaleDateString('it-IT') : (b.scadenza ? new Date(b.scadenza).toLocaleDateString('it-IT') : 'Sempre attivo'))}</strong></div>
-        <button class="btn-d ${status === 'closed' ? 'closed' : ''}" style="background:${status === 'closed' ? '#94a3b8' : (status === 'upcoming' ? '#d97706' : '#1a6ef5')}; padding: 10px 24px; border-radius:100px;">${status === 'closed' ? 'Sold Out' : (status === 'upcoming' ? 'Scopri in anteprima →' : 'Scopri di più →')}</button>
+        <button class="btn-d ${status === 'closed' ? 'closed' : ''}" style="background:${status === 'closed' ? '#94a3b8' : (status === 'upcoming' ? '#d97706' : '#1a6ef5')}; padding: 10px 24px; border-radius:100px;">${status === 'closed' ? 'Chiuso' : (status === 'upcoming' ? 'Scopri in anteprima →' : 'Scopri di più →')}</button>
       </div>
     </div>`;
 }
