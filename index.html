@@ -295,6 +295,9 @@ function createModalHTML(b) {
   const cosPaga = (b.cosa_paga || []).map(p => `<li><span class="dot">✔</span>${p}</li>`).join('');
   const cosNonPaga = (b.cosa_non_paga || []).map(p => `<li><span class="dot">✗</span><span style="color:#6b7280; text-decoration:line-through;">NON paga: ${p}</span></li>`).join('');
 
+  // Prepare regional rates for the select change
+  const tariffeStr = JSON.stringify(b.tariffe_regionali || {});
+
   return `
     <div class="ov" id="${b.id}">
      <div class="modal">
@@ -329,17 +332,17 @@ function createModalHTML(b) {
          <p>Stima basata su parametri ufficiali.</p>
          <div class="sr">
           <div class="sg"><label>Dimensione azienda</label><select id="sDim-${b.id}"><option value="micro">Micro (1-9 dip.)</option><option value="piccola">Piccola (10-49 dip.)</option><option value="media">Media (50-249 dip.)</option></select></div>
-          <div class="sg"><label>Regione</label><select id="sReg-${b.id}" onchange="updateTariffa('${b.id}')"><option value="puglia">Puglia</option><option value="sud">Altro Sud</option><option value="nord">Nord/Centro</option></select></div>
+          <div class="sg"><label>Regione</label><select id="sReg-${b.id}" onchange='updateTariffa("${b.id}", ${tariffeStr})'><option value="puglia">Puglia</option><option value="sud">Altro Sud</option><option value="nord">Nord/Centro</option></select></div>
          </div>
          <div class="sr">
-          <div class="sg"><label>Dipendenti</label><input type="number" id="sDip-${b.id}" value="5"/></div>
-          <div class="sg"><label>Ore Formazione</label><input type="number" id="sOre-${b.id}" value="40"/></div>
+          <div class="sg"><label id="sL1-${b.id}">${b.sim_label1||'Dipendenti'}</label><input type="number" id="sV1-${b.id}" value="5"/></div>
+          <div class="sg"><label id="sL2-${b.id}">${b.sim_label2||'Ore Formazione'}</label><input type="number" id="sV2-${b.id}" value="40"/></div>
          </div>
          <div class="sr">
           <div class="sg"><label>Sovraregionale?</label><select id="sSov-${b.id}"><option value="no">No</option><option value="si">Sì (+bonus)</option></select></div>
-          <div class="sg"><label>Tariffa Oraria (€)</label><input type="text" id="sTar-${b.id}" value="45.03" readonly style="background:#e8f4e8; color:#15803d; font-weight:700;"/></div>
+          <div class="sg"><label>Tariffa Oraria/Quota (€)</label><input type="text" id="sTar-${b.id}" value="${(b.tariffe_regionali && b.tariffe_regionali.puglia) || '45.03'}" readonly style="background:#e8f4e8; color:#15803d; font-weight:700;"/></div>
          </div>
-         <button class="btn-sim" onclick="runSim('${b.id}', ${b.intensita_base||50}, ${b.intensita_bonus||20}, ${b.intensita_max||70})">⚡ Calcola il mio contributo</button>
+         <button class="btn-sim" onclick="runSim('${b.id}', ${b.intensita_base||50}, ${b.intensita_bonus||20}, ${b.intensita_max||70}, ${b.min_spesa||10000}, ${b.max_spesa||60000}, '${b.sim_tipo_logica||'formazione'}')">⚡ Calcola il mio contributo</button>
          <div class="sres" id="sRes-${b.id}">
           <div class="srt">📊 STIMA DEL TUO RIMBORSO</div>
           <div class="sam" id="sAmt-${b.id}">...</div>
@@ -359,18 +362,20 @@ function createModalHTML(b) {
     </div>`;
 }
 
-function updateTariffa(id) {
+function updateTariffa(id, tariffe) {
   const reg = document.getElementById('sReg-'+id).value;
-  document.getElementById('sTar-'+id).value = (reg==='puglia'?'45.03':'41.19');
+  let val = tariffe[reg] || tariffe['sud'] || '30.00';
+  if (reg === 'nord') val = '0.00';
+  document.getElementById('sTar-'+id).value = val;
 }
 
-function runSim(id, base, bonusVal, max) {
+function runSim(id, base, bonusVal, max, minSpesa, maxSpesa, tipo) {
   const dim = document.getElementById('sDim-'+id).value;
   const reg = document.getElementById('sReg-'+id).value;
-  const dip = parseInt(document.getElementById('sDip-'+id).value)||1;
-  const ore = parseInt(document.getElementById('sOre-'+id).value)||1;
+  const v1 = parseFloat(document.getElementById('sV1-'+id).value)||0;
+  const v2 = parseFloat(document.getElementById('sV2-'+id).value)||0;
   const sov = document.getElementById('sSov-'+id).value;
-  const tariffa = parseFloat(document.getElementById('sTar-'+id).value)||30;
+  const tariffa = parseFloat(document.getElementById('sTar-'+id).value)||0;
   
   const resDiv = document.getElementById('sRes-'+id);
   const amtDiv = document.getElementById('sAmt-'+id);
@@ -380,21 +385,23 @@ function runSim(id, base, bonusVal, max) {
   const tDiv = document.getElementById('sTasca-'+id);
   const wDiv = document.getElementById('sWarn-'+id);
 
-  if(reg==='nord'){ alert('Solo Sud Italia.'); return; }
+  if(reg==='nord' || tariffa <= 0){ alert('Bando non applicabile per questa selezione.'); return; }
   
-  const costo = dip * ore * tariffa;
+  // Logic switch: 'formazione' (v1*v2*tariffa) or 'investimento' (v1*v2*tariffa or just direct calc)
+  // For Staff House 'investimento', we expect v1=posti letto, v2=anni, tariffa=max/posto letto
+  const costo = (tipo === 'formazione') ? (v1 * v2 * tariffa) : (v1 * v2 * tariffa);
   
-  if(costo < 10000) {
+  if(costo < minSpesa) {
     amtDiv.textContent = 'Sotto soglia minima';
     amtDiv.classList.add('error');
-    amlDiv.textContent = 'Servono almeno €10.000 di costo ammissibile';
+    amlDiv.textContent = `Servono almeno €${minSpesa.toLocaleString('it-IT')} di spesa ammissibile`;
     pDiv.textContent = '-';
     sDiv.textContent = '€ ' + Math.round(costo).toLocaleString('it-IT');
     tDiv.textContent = '-';
-    wDiv.innerHTML = `<div class="swarning"><i>⚠️</i> Il costo calcolato (€${Math.round(costo).toLocaleString('it-IT')}) è sotto la soglia minima di €10.000. Prova ad aumentare il numero di dipendenti o le ore di formazione per rientrare nel bando.</div>`;
+    wDiv.innerHTML = `<div class="swarning"><i>⚠️</i> Il costo calcolato (€${Math.round(costo).toLocaleString('it-IT')}) è sotto la soglia minima di €${minSpesa.toLocaleString('it-IT')}. Modifica i parametri per rientrare nel bando.</div>`;
   } else {
     amtDiv.classList.remove('error');
-    const spesa = Math.min(costo, 60000);
+    const spesa = Math.min(costo, maxSpesa);
     const perc = Math.min(base + (sov==='si'?bonusVal:0), (dim==='media'?60:max));
     const contrib = Math.round(spesa * perc / 100);
     
